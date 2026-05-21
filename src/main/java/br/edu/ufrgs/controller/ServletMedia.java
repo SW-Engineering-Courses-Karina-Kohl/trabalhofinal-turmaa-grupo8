@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebServlet("/processa")
 public class ServletMedia extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttptreeServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
         try {
@@ -28,5 +28,36 @@ public class ServletMedia extends HttpServlet {
         }
 
         request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+}
+
+@WebServlet("/csv-teste")
+public class CSVTesteServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(
+            HttpServletRequest req,
+            HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        CSVService csvService =
+                new CSVService();
+
+        List<String[]> linhas =
+                csvService.ler("dados.csv");
+
+        req.setAttribute(
+                "quantidadeLinhas",
+                linhas.size()
+        );
+
+        req.setAttribute(
+                "dadosCsv",
+                linhas
+        );
+
+        req.getRequestDispatcher(
+                "/resultado.jsp"
+        ).forward(req, resp);
     }
 }
