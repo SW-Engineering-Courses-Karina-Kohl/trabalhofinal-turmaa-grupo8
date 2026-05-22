@@ -12,7 +12,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.opencsv</groupId>
+            <groupId>com.opencsv</groupId> // biblioteca para leitura e escrita de arquivos CSV
             <artifactId>opencsv</artifactId>
             <version>5.9</version>
         </dependency>

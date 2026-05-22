@@ -6,25 +6,22 @@ import com.opencsv.CSVWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import com.opencsv.exceptions.CsvException;
 import java.util.ArrayList;
 import java.util.List;
 
 // Responsável por ler e escrever arquivos CSV usando OpenCSV
 // Encapsula a lógica de acesso a .csv
-// essa classe não precisa conhecer os objetos do nosso domínio
+// essa classe não precisa conhecer os objetos do domínio da aplicação
 public class CSVService {
 
     // método ler
-    // String caminhoArquivo -> Lista de arrays de strings (cada array representa
-    // uma linha do CSV)
+    // String caminhoArquivo -> List<String[]> linhasCsv
+    // (cada array String[] representa uma linha do CSV)
     public List<String[]> ler(String caminhoArquivo) {
 
-        // valida o caminho do arquivo antes de tentar ler
-        if (caminhoArquivo == null || caminhoArquivo.isBlank()) {
-
-            throw new IllegalArgumentException("Caminho do arquivo inválido.");
-        }
+        // antes de tentar ler:
+        validarCaminho(caminhoArquivo);
 
         try (CSVReader reader = new CSVReader(new FileReader(caminhoArquivo))) {
             // tenta abrir o arquivo CSV para leitura
@@ -33,12 +30,14 @@ public class CSVService {
             return linhasCsv;
 
         } catch (IOException e) {
-
+            // encapsula o erro de leitura do arquivo em uma RuntimeException
+            // (sem necessidade de declarar throws na assinatura do método significa )
             throw new RuntimeException("Erro ao ler arquivo CSV: " + caminhoArquivo, e);
-            // RuntimeException é uma exceção não verificada (não precisa ser declarada na
-            // assinatura do método)
-            // Lança uma exceção por qualquer erro de leitura do arquivo CSV, incluindo o
-            // caminho do arquivo e a causa original (e)
+
+        } catch (CsvException e) {
+            // encapsula falhas sobre formato ou estrutura do CSV (ex: número de colunas
+            // diferente entre linhas) 
+            throw new RuntimeException("Erro no formato/conteúdo do CSV: " + caminhoArquivo, e);
         }
     }
 
@@ -47,30 +46,39 @@ public class CSVService {
     // escreve os dados no arquivo CSV especificado
     public void escrever(String caminhoArquivo, List<String[]> dados) {
 
-        // fail-fast:
         // valida os parâmetros antes de tentar escrever o arquivo
-        if (caminhoArquivo == null || caminhoArquivo.isBlank()) {
-
-            throw new IllegalArgumentException("Caminho do arquivo inválido.");
-        }
-
-        if (dados == null) {
-
-            throw new IllegalArgumentException("Os dados para escrita não podem ser null.");
-        }
+        validarCaminho(caminhoArquivo);
+        validarDados(dados);
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(caminhoArquivo))) {
             // tenta abrir/criar o arquivo CSV para escrita
             // se o arquivo for aberto/criado com sucesso:
-
             writer.writeAll(dados);
             // escreve todas as linhas da lista no arquivo CSV
-            // cada String[] representa uma linha da tabela
 
         } catch (IOException e) {
-            // lança uma exceção caso ocorra erro de escrita do arquivo
-            // inclui o caminho do arquivo e preserva a causa original (e)
+            // encapsula o erro de escrita do arquivo (Ex: permissão negada, espaço insuficiente) 
             throw new RuntimeException("Erro ao escrever arquivo CSV: " + caminhoArquivo, e);
         }
     }
+    
+    // ------------- metodos auxiliares de validação de parâmetros --------------
+    // String caminhoArquivo -> void
+    private void validarCaminho(String caminhoArquivo) {
+
+        if (caminhoArquivo == null || caminhoArquivo.isBlank()) {
+            // pre-condição: o caminho do arquivo não pode ser nulo ou vazio
+            throw new IllegalArgumentException("Caminho do arquivo inválido.");
+        }
+    }
+
+    // List<String[]> dados -> void
+    private void validarDados(List<String[]> dados) {
+
+        if (dados == null) {
+            // pre-condição: os dados a serem escritos não podem ser nulos
+            throw new IllegalArgumentException("Dados inválidos.");
+        }
+    }
+
 }
