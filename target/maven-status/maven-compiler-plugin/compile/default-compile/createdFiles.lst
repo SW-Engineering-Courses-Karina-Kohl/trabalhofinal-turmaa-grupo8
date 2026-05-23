@@ -1,3 +1,6 @@
 br\edu\ufrgs\controller\CSVTesteServlet.class
+br\edu\ufrgs\controller\ServletMedia.class
 br\edu\ufrgs\dao\CSVService.class
 br\edu\ufrgs\model\Aluno.class
+br\edu\ufrgs\mapper\ConfigMapper.class
+br\edu\ufrgs\model\Config.class

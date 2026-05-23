@@ -22,7 +22,8 @@ ${quantidadeLinhas}
         (java.util.List<String[]>)
             request.getAttribute("dadosCsv");
 
-    for (String[] linha : dados) {
+    if (dados != null) {
+        for (String[] linha : dados) {
 %>
 
     <p>
@@ -33,6 +34,16 @@ ${quantidadeLinhas}
 
     <% } %>
 
+    </p>
+
+<%
+        }
+    } else {
+%>
+
+    <p>
+        Nenhum dado carregado. Acesse o servlet pelo caminho:
+        <a href="csv-teste">/csv-teste</a>
     </p>
 
 <%

@@ -1,0 +1,23 @@
+cd C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8
+
+mvn clean compile
+
+mvn clean package
+
+docker compose down
+docker compose build --no-cache 
+docker compose up -d
+
+docker compose up -d
+
+git push -u origin feature/csv-mappers
+git push
+
+http://localhost:8080/csv-teste
+http://localhost:8080/index.jsp
+
+//atualizar branch com main futuramente
+git checkout main
+git pull
+git checkout feature/csv-mappers
+git merge main
