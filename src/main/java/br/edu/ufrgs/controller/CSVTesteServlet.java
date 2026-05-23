@@ -11,8 +11,6 @@ import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/csv-teste")
-
 // Java Servlet = tecnologia para criar aplicações web em Java 
 // java + protocolo HTTP (GET, POST, etc) + geração de respostas HTTP (HTML, JSON, etc)
 // HttpServlet = responde requisições HTTP (GET, POST, etc) e gera respostas HTTP
