@@ -1,4 +1,4 @@
-package br.edu.ufrgs.mapper;
+package br.edu.ufrgs.dao.mapper;
 
 import br.edu.ufrgs.model.Config;
 
