@@ -1,15 +1,13 @@
 package br.edu.ufrgs.controller;
 
-import br.edu.ufrgs.dao.CSVService;
+import java.io.IOException;
+import java.util.List;
 
+import br.edu.ufrgs.dao.CSVService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.WebServlet;
-
-import java.io.IOException;
-import java.util.List;
 
 // Java Servlet = tecnologia para criar aplicações web em Java 
 // java + protocolo HTTP (GET, POST, etc) + geração de respostas HTTP (HTML, JSON, etc)
@@ -37,5 +35,5 @@ public class CSVTesteServlet extends HttpServlet {
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
         // encaminha a requisição e resposta para o JSP que irá gerar a página HTML final
         // "/index.jsp" --> ira se tornar "/views/index.jsp" quando for processada pelo servlet container 
-    }
+        }
 }

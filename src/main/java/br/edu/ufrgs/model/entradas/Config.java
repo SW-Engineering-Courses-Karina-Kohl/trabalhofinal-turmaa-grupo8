@@ -1,4 +1,4 @@
-package br.edu.ufrgs.model;
+package br.edu.ufrgs.model.entradas;
 
 // Representa as configurações do sistema
 // carregadas a partir do arquivo CSV
