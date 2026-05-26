@@ -1,3 +1,4 @@
+package br.edu.ufrgs.dao.mapper;
 //package br.edu.ufrgs.mapper;
 
 //import java.util.List;

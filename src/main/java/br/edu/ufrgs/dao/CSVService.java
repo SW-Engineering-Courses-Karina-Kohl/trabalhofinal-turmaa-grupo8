@@ -1,14 +1,13 @@
 package br.edu.ufrgs.dao;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import com.opencsv.exceptions.CsvException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 // Responsável por ler e escrever arquivos CSV usando OpenCSV
 // Encapsula a lógica de acesso a .csv

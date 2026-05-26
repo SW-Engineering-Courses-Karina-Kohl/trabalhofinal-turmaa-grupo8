@@ -1,10 +1,10 @@
 package br.edu.ufrgs.dao.mapper;
 
-import br.edu.ufrgs.model.Config;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import br.edu.ufrgs.model.entradas.Config;
 
 // Responsável por converter (mapear) linhas lidas do CSV
 // em um objeto Config do domínio da aplicação
