@@ -1,6 +1,5 @@
 package br.edu.ufrgs.controller;
 
-import br.edu.ufrgs.model.Aluno; // Importação do Model
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import br.edu.ufrgs.model.entradas.Aluno;
 
 
 @WebServlet("/processa")

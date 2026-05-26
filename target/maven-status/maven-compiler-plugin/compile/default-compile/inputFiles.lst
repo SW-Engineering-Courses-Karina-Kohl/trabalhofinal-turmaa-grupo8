@@ -1,9 +1,8 @@
 C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\controller\CSVTesteServlet.java
 C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\controller\ServletMedia.java
 C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\dao\CSVService.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\mapper\ConfigMapper.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\mapper\ProjetoSolarMapper.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\mapper\ResultadoViabilidadeMapper.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\model\Aluno.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\model\Config.java
-C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\model\ProjetoSolar.java
+C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\dao\mapper\ConfigMapper.java
+C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\dao\mapper\ProjetoSolarMapper.java
+C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\dao\mapper\ResultadoViabilidadeMapper.java
+C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\model\entradas\Config.java
+C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8\src\main\java\br\edu\ufrgs\model\entradas\ProjetoSolar.java
