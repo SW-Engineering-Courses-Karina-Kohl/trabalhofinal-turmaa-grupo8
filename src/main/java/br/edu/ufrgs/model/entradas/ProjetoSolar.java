@@ -2,42 +2,42 @@ package br.edu.ufrgs.model.entradas;
 
 public class ProjetoSolar {
 
-    private String projeto_id; // ID do projeto
+    private String projetoId; // ID do projeto
     private String cliente;
-    private double investimento_inicial; // investimento inicial em reais
-    private double producao_mes_kWh;
-    private String modelo_painel;
+    private double investimentoInicial; // investimento inicial em reais
+    private double producaoMesKWh;
+    private String modeloPainel;
 
 
     public ProjetoSolar(
-            String projeto_id,
+            String projetoId,
             String cliente,
-            double investimento_inicial,
-            double producao_mes_kWh,
-            String modelo_painel
+            double investimentoInicial,
+            double producaoMesKWh,
+            String modeloPainel
     ) {
-        this.projeto_id = projeto_id;
+        this.projetoId = projetoId;
         this.cliente = cliente;
-        this.investimento_inicial = investimento_inicial;
-        this.producao_mes_kWh = producao_mes_kWh;
-        this.modelo_painel = modelo_painel;
+        this.investimentoInicial = investimentoInicial;
+        this.producaoMesKWh = producaoMesKWh;
+        this.modeloPainel = modeloPainel;
     }
 
     // ---------------- getters ----------------
-    public String getProjeto_id() {
-        return projeto_id;
+    public String getProjetoId() {
+        return projetoId;
     }
     public String getCliente() {
         return cliente;
     }
-    public double getInvestimento_inicial() {
-        return investimento_inicial;
+    public double getInvestimentoInicial() {
+        return investimentoInicial;
     }
-    public double getProducao_mes_kWh() {
-        return producao_mes_kWh;
+    public double getProducaoMesKWh() {
+        return producaoMesKWh;
     }
-    public String getModelo_painel() {
-        return modelo_painel;
+    public String getModeloPainel() {
+        return modeloPainel;
     }
 }
 
