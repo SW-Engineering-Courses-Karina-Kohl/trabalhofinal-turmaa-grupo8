@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import br.edu.ufrgs.model.enums.ETipoCalculo;
-import br.edu.ufrgs.model.resultado.ResultadoViabilidade;
 import br.edu.ufrgs.model.entradas.ProjetoSolar;
 import br.edu.ufrgs.model.entradas.Config;
 
@@ -28,40 +27,50 @@ public class MotorCalculos {
         return instance;
     }
     
-    public ResultadoViabilidade processarCalculos(Config config, ProjetoSolar projeto) {
-
+    public Map<ETipoCalculo, Double> processarCalculos(Config config, ProjetoSolar projeto) {
         Map<ETipoCalculo, Double> mapa = new EnumMap<>(ETipoCalculo.class);
-        ContextoCalculo contexto = new ContextoCalculo(
-                projeto.getProducaoKWh(),
-                projeto.getInvestimentoInicial(),
-                config.getTarifaKWh(),
-                config.getFatorCO2KWh()
-        );
 
-        for (ICalculo calculo : calculos) {
-            try {
-                calculo.calcular(contexto);
-                mapa.put(calculo.getTipo(), calculo.getValor());
-
-            } catch (Exception e) {
-                throw new RuntimeException(
-                        "Erro ao executar cálculo " + calculo.getTipo(),
-                        e
-                );
+        if (config == null) {
+            throw new IllegalArgumentException("Configuração não pode ser nula.");
+        }else{
+            if(config.getTarifaKWh() < 0 || config.getFatorCO2KWh() < 0){
+                throw new IllegalArgumentException("Valores de configuração não podem ser negativos.");
             }
         }
 
-        try {
-            return new ResultadoViabilidade(
-                    mapa,
-                    config.getLimiteExcelenteAnos(),
-                    config.getLimiteViavelAnos()
-            );
-
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Erro ao gerar ResultadoViabilidade",
-                    e
-            );
+        if (projeto == null) {
+            throw new IllegalArgumentException("Projeto Solar não pode ser nulo.");
+        } else {
+            if (projeto.getProducaoMesKWh() < 0 || projeto.getInvestimentoInicial() < 0) {
+                throw new IllegalArgumentException("Valores do projeto não podem ser negativos.");
+            }
         }
+
+       
+
+        try{
+            ContextoCalculo contexto = new ContextoCalculo(
+                    projeto.getProducaoMesKWh(),
+                    projeto.getInvestimentoInicial(),
+                    config.getTarifaKWh(),
+                    config.getFatorCO2KWh()
+            );
+            for (ICalculo calculo : calculos) {
+                try {
+                    calculo.calcular(contexto);
+                    mapa.put(calculo.getTipo(), calculo.getValor());
+
+                } catch (Exception e) {
+                    throw new RuntimeException("Erro ao executar cálculo " + calculo.getTipo(), e);
+                }
+            }
+            
+        }catch (Exception e){
+            throw new RuntimeException("Erro ao criar o contexto de cálculo: " + e.getMessage(), e);
+        }
+
+        return mapa;
+
+        
     }
+}
