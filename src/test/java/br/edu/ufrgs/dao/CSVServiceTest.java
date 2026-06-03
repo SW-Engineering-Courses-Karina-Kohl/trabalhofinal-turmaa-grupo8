@@ -9,165 +9,179 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CSVServiceTest {
 
-    // RF-CSV-001
-    // leitura de CSV válido
+        // RF-CSV-001
+        // caminho vazio deve falhar
+        @Test
+        void lerDeveFalharSeCaminhoForVazio() {
 
-    @Test
-    void lerDeveRetornarLinhasDoCSV() {
+                CSVService csvService = new CSVService();
 
-        // ---------- Arrange ----------
-        CSVService csvService =
-                new CSVService();
+                assertThrows(IllegalArgumentException.class,
+                                () -> csvService.ler(""));
+        }
 
-        String caminhoArquivo =
-                "src/test/resources/csv/arquivo_valido.csv";
+        // RF-CSV-002
+        // leitura de CSV válido
+        @Test
+        void lerDeveRetornarLinhasDoCSV() {
 
-        // ---------- Act ----------
-        List<String[]> linhas =
-                csvService.ler(caminhoArquivo);
+                // ---------- Arrange ----------
+                CSVService csvService = new CSVService();
 
-        // ---------- Assert ----------
-        assertEquals(3, linhas.size());
+                String caminhoArquivo = "src/test/resources/csv/arquivo_valido.csv";
 
-        assertEquals(
-                "parametro",
-                linhas.get(0)[0]
-        );
+                // ---------- Act ----------
+                List<String[]> linhas = csvService.ler(caminhoArquivo);
 
-        assertEquals(
-                "tarifa_kwh",
-                linhas.get(1)[0]
-        );
+                // ---------- Assert ----------
+                assertEquals(3, linhas.size());
 
-        assertEquals(
-                "0.85",
-                linhas.get(1)[1]
-        );
-    }
+                assertEquals(
+                                "parametro",
+                                linhas.get(0)[0]);
 
-    // RF-CSV-002
-    // caminho null deve falhar
+                assertEquals(
+                                "tarifa_kwh",
+                                linhas.get(1)[0]);
 
-    @Test
-    void lerDeveFalharSeCaminhoForNull() {
+                assertEquals(
+                                "0.85",
+                                linhas.get(1)[1]);
+        }
 
-        // ---------- Arrange ----------
-        CSVService csvService =
-                new CSVService();
+        // RF-CSV-002
+        // caminho null deve falhar
 
-        // ---------- Act + Assert ----------
-        IllegalArgumentException erro =
-                assertThrows(
-                        IllegalArgumentException.class,
-                        () -> csvService.ler(null)
-                );
+        @Test
+        void lerDeveFalharSeCaminhoForNull() {
 
-        assertEquals(
-                "Caminho do arquivo inválido.",
-                erro.getMessage()
-        );
-    }
+                // ---------- Arrange ----------
+                CSVService csvService = new CSVService();
 
-    // RF-CSV-003
-    // arquivo inexistente deve lançar exceção
+                // ---------- Act + Assert ----------
+                IllegalArgumentException erro = assertThrows(
+                                IllegalArgumentException.class,
+                                () -> csvService.ler(null));
 
-    @Test
-    void lerDeveFalharSeArquivoNaoExistir() {
+                assertEquals(
+                                "Caminho do arquivo inválido.",
+                                erro.getMessage());
+        }
 
-        // ---------- Arrange ----------
-        CSVService csvService =
-                new CSVService();
+        // RF-CSV-003
+        // arquivo inexistente deve lançar exceção
 
-        String caminhoArquivo =
-                "arquivo_inexistente.csv";
+        @Test
+        void lerDeveFalharSeArquivoNaoExistir() {
 
-        // ---------- Act + Assert ----------
-        RuntimeException erro =
-                assertThrows(
-                        RuntimeException.class,
-                        () -> csvService.ler(caminhoArquivo)
-                );
+                // ---------- Arrange ----------
+                CSVService csvService = new CSVService();
 
-        assertTrue(
-                erro.getMessage()
-                        .contains("Erro ao ler arquivo CSV")
-        );
-    }
+                String caminhoArquivo = "arquivo_inexistente.csv";
 
-    // RF-CSV-004
-    // escrita de CSV válido
+                // ---------- Act + Assert ----------
+                RuntimeException erro = assertThrows(
+                                RuntimeException.class,
+                                () -> csvService.ler(caminhoArquivo));
 
-    @Test
-    void escreverDeveCriarArquivoCSV() {
+                assertTrue(
+                                erro.getMessage()
+                                                .contains("Erro ao ler arquivo CSV"));
+        }
 
-        // ---------- Arrange ----------
-        CSVService csvService =
-                new CSVService();
+        @Test
+        void escreverDeveFalharSeCaminhoForNull() {
 
-        String caminhoArquivo =
-                "src/test/resources/csv/saida.csv";
+                CSVService csvService = new CSVService();
 
-        List<String[]> dados =
-                new ArrayList<>();
+                List<String[]> dados = new ArrayList<>();
 
-        dados.add(
-                new String[]{
-                        "nome",
-                        "valor"
-                }
-        );
+                assertThrows(IllegalArgumentException.class,
+                                () -> csvService.escrever(null, dados));
+        }
 
-        dados.add(
-                new String[]{
-                        "tarifa_kwh",
-                        "0.85"
-                }
-        );
+        // RF-CSV-004
+        // escrita de CSV válido
 
-        // ---------- Act ----------
-        csvService.escrever(
-                caminhoArquivo,
-                dados
-        );
+        @Test
+        void escreverDeveCriarArquivoCSV() {
 
-        List<String[]> linhasLidas =
-                csvService.ler(caminhoArquivo);
+                // ---------- Arrange ----------
+                CSVService csvService = new CSVService();
 
-        // ---------- Assert ----------
-        assertEquals(
-                2,
-                linhasLidas.size()
-        );
+                String caminhoArquivo = "src/test/resources/csv/saida.csv";
 
-        assertEquals(
-                "tarifa_kwh",
-                linhasLidas.get(1)[0]
-        );
-    }
+                List<String[]> dados = new ArrayList<>();
 
-    // RF-CSV-005
-    // escrita deve falhar com dados null
+                dados.add(
+                                new String[] {
+                                                "nome",
+                                                "valor"
+                                });
 
-    @Test
-    void escreverDeveFalharSeDadosForemNull() {
+                dados.add(
+                                new String[] {
+                                                "tarifa_kwh",
+                                                "0.85"
+                                });
 
-        // ---------- Arrange ----------
-        CSVService csvService =
-                new CSVService();
+                // ---------- Act ----------
+                csvService.escrever(
+                                caminhoArquivo,
+                                dados);
 
-        // ---------- Act + Assert ----------
-        IllegalArgumentException erro =
-                assertThrows(
-                        IllegalArgumentException.class,
-                        () -> csvService.escrever(
-                                "teste.csv",
-                                null
-                        )
-                );
+                List<String[]> linhasLidas = csvService.ler(caminhoArquivo);
 
-        assertEquals(
-                "Dados inválidos.",
-                erro.getMessage()
-        );
-    }
+                // ---------- Assert ----------
+                assertEquals(
+                                2,
+                                linhasLidas.size());
+
+                assertEquals(
+                                "tarifa_kwh",
+                                linhasLidas.get(1)[0]);
+        }
+
+        // RF-CSV-005
+        // escrita deve falhar com dados null
+
+        @Test
+        void escreverDeveFalharSeDadosForemNull() {
+
+                // ---------- Arrange ----------
+                CSVService csvService = new CSVService();
+
+                // ---------- Act + Assert ----------
+                IllegalArgumentException erro = assertThrows(
+                                IllegalArgumentException.class,
+                                () -> csvService.escrever(
+                                                "teste.csv",
+                                                null));
+
+                assertEquals(
+                                "Dados inválidos.",
+                                erro.getMessage());
+        }
+
+        @Test
+        void escreverDeveFalharQuandoNaoConseguirCriarArquivo() {
+
+                CSVService csvService = new CSVService();
+
+                List<String[]> dados = new ArrayList<>();
+
+                dados.add(
+                                new String[] { "a", "b" });
+
+                RuntimeException erro = assertThrows(
+                                RuntimeException.class,
+                                () -> csvService.escrever(
+                                                "?:/caminho/invalido.csv",
+                                                dados));
+
+                assertTrue(
+                                erro.getMessage()
+                                                .contains("Erro ao escrever arquivo CSV"));
+        }
+
 }

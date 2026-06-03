@@ -27,8 +27,6 @@ public class ConfigMapper {
         validarArquivoNaoVazio(linhas);
 
         // valida estrutura do cabeçalho antes de acessá-lo
-        validarQuantidadeColunas(linhas.get(0));
-        // valida nomes esperados do cabeçalho
         validarCabecalho(linhas.get(0));
 
         // estrutura de dicionário auxiliar:
@@ -38,7 +36,7 @@ public class ConfigMapper {
 
         // garante que parametros obrigatórios existam no mapa
         validarParametrosObrigatorios(parametros);
-
+        // valores atribuídos aos parmetros devem fazer sentido no domínio
         validarValoresSemanticos(parametros);
 
         // cria e retorna o objeto Config do domínio
@@ -108,10 +106,10 @@ public class ConfigMapper {
     // valida a estrutura básica das linhas lidas do CSV
     private void validarArquivoNaoVazio(List<String[]> linhas) {
 
-        if (linhas == null || linhas.isEmpty()) {
+        if (linhas.isEmpty()) {
             // pré-condição:
-            // linhas não podem ser null ou vazias
-            throw new IllegalArgumentException("Linhas do CSV não podem ser null ou vazias.");
+            // linhas não podem ser vazias
+            throw new IllegalArgumentException("CSV vazio: nenhuma linha encontrada.");
         }
 
     }
@@ -121,7 +119,8 @@ public class ConfigMapper {
     private void validarLinhaNaoNula(String[] linha) {
 
         if (linha == null) {
-
+            // pré-condição:
+            // linha do CSV não pode ser null
             throw new IllegalArgumentException("Linha do CSV não pode ser null.");
         }
     }
@@ -141,6 +140,8 @@ public class ConfigMapper {
     // List<String[]> linhas -> void
     // valida o cabeçalho do CSV
     private void validarCabecalho(String[] cabecalho) {
+
+        validarQuantidadeColunas(cabecalho); // garante que o cabeçalho tenha 2 colunas
         // valida nomes esperados no cabeçalho
         // coluna 0 = "parametro"
         // coluna 1 = "valor"
@@ -218,29 +219,25 @@ public class ConfigMapper {
         // fator CO2 não pode ser negativo
         if (fatorCo2Kwh < 0) {
 
-            throw new IllegalArgumentException(
-                    "fator_co2_kwh não pode ser negativo.");
+            throw new IllegalArgumentException("fator_co2_kwh não pode ser negativo.");
         }
 
         // limite excelente deve ser positivo
         if (limiteExcelente <= 0) {
 
-            throw new IllegalArgumentException(
-                    "limite_excelente_anos deve ser maior que zero.");
+            throw new IllegalArgumentException("limite_excelente_anos deve ser maior que zero.");
         }
 
         // limite viável deve ser positivo
         if (limiteViavel <= 0) {
 
-            throw new IllegalArgumentException(
-                    "limite_viavel_anos deve ser maior que zero.");
+            throw new IllegalArgumentException("limite_viavel_anos deve ser maior que zero.");
         }
 
         // excelente deve ser menor ou igual ao viável
         if (limiteExcelente > limiteViavel) {
 
-            throw new IllegalArgumentException(
-                    "limite_excelente_anos não pode ser maior que limite_viavel_anos.");
+            throw new IllegalArgumentException("limite_excelente_anos não pode ser maior que limite_viavel_anos.");
         }
     }
 
