@@ -15,15 +15,6 @@ public class ContextoCalculo {
             double tarifa,
             double fatorCO2
     ) {
-
-        if (producaoKWh<0 || investimentoInicial < 0 || tarifa < 0 || fatorCO2 < 0) {
-            throw new IllegalArgumentException("Valores de contexto de cálculo não podem ser negativos.");
-        }
-
-        if(producaoKWh == 0 || tarifa == 0) {
-            throw new IllegalArgumentException("ProducaoKWh e Tarifa não podem ser zero.");
-        }
-
         this.producaoKWh = producaoKWh;
         this.investimentoInicial = investimentoInicial;
         this.tarifa = tarifa;

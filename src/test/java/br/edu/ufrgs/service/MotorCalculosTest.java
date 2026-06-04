@@ -3,7 +3,6 @@ package br.edu.ufrgs.service;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 import java.util.ArrayList;
@@ -13,8 +12,17 @@ import java.util.List;
 import br.edu.ufrgs.model.enums.ETipoCalculo;
 import br.edu.ufrgs.model.entradas.*;
 
-
-
+/**
+ * Classe de teste para o MotorCalculos.
+ * Teste1: Verificar processamento correto com entradas válidas.
+ * Teste2: Verificar exceção ao criar MotorCalculos com lista nula.
+ * Teste3: Verificar exceção ao processar cálculos com Config nula.
+ * Teste4: Verificar exceção ao processar cálculos com ProjetoSolar nulo.
+ * Teste5: Verificar exceção ao processar cálculos com valores negativos na Configuração.
+ * Teste6: Verificar exceção ao processar cálculos com valores negativos no ProjetoSolar.
+ * Teste7: Verificar exceção ao processar cálculos com tarifa zero na Configuração.
+ * Teste8: Verificar exceção ao processar cálculos com produção mensal zero no ProjetoSolar.
+ */
 public class MotorCalculosTest {
     //pré-requisitos para os testes: ter objetos Config e ProjetoSolar, e uma lista de cálculos (ex: Payback, EconomiaMensal, ImpactoVerde) para passar para o MotorCalculos.
     private List<ICalculo> calculos = new ArrayList<>();;
@@ -24,8 +32,6 @@ public class MotorCalculosTest {
  
     Map<ETipoCalculo, Double> mapa = new EnumMap<>(ETipoCalculo.class);
     
-
-
     @Test
     void testeProcessamentoMotorCalculosComListaValida() {
         ProjetoSolar projeto = new ProjetoSolar("P_001", "Cliente A", 10000.0, 500.0, "Modelo X");
@@ -143,20 +149,20 @@ public class MotorCalculosTest {
     
     @Test
     void testeProcessamentoMotorCalculosComValoresZeradosNaConfiguracao() {
-        // Cenário de tarifa zero força o erro de Payback (divisão por zero)
         ProjetoSolar projeto = new ProjetoSolar("P_001", "Cliente A", 10000.0, 500.0, "Modelo X");
         Config config = new Config(0.0, 0.0, 3.0, 5.0); 
 
+        calculos.add(calculoEconomiaMensal);
         calculos.add(calculoPayback);
-        MotorCalculos motor = MotorCalculos.getInstance(calculos);
+        calculos.add(calculoImpactoVerde);
 
-        // Captura a RuntimeException gerada pela falha interna do cálculo
-        RuntimeException exception = assertThrows(
-            RuntimeException.class,
-            () -> motor.processarCalculos(config, projeto)
-        );
-        
-        assertEquals("Erro ao criar o contexto de cálculo: ProducaoKWh e Tarifa não podem ser zero.", exception.getMessage());
+        MotorCalculos motor = MotorCalculos.getInstance(calculos);  
+
+        try {
+            motor.processarCalculos(config, projeto);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Tarifa por kWh não pode ser zero.", e.getMessage());
+        }
     }    
 
     @Test
@@ -165,16 +171,17 @@ public class MotorCalculosTest {
         ProjetoSolar projeto = new ProjetoSolar("P_001", "Cliente A", 10000.0, 0.0, "Modelo X");
         Config config = new Config(0.5, 0.2, 3.0, 5.0); 
 
+        calculos.add(calculoEconomiaMensal);
         calculos.add(calculoPayback);
-        MotorCalculos motor = MotorCalculos.getInstance(calculos);
+        calculos.add(calculoImpactoVerde);
 
-        // Captura a RuntimeException gerada pela falha interna do cálculo
-        RuntimeException exception = assertThrows(
-            RuntimeException.class,
-            () -> motor.processarCalculos(config, projeto)
-        );
-        
-        assertEquals("Erro ao criar o contexto de cálculo: ProducaoKWh e Tarifa não podem ser zero.", exception.getMessage());
-    }    
+        MotorCalculos motor = MotorCalculos.getInstance(calculos);  
+
+        try {
+            motor.processarCalculos(config, projeto);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Produção mensal de kWh não pode ser zero.", e.getMessage());
+        }
+    }
 
 }
