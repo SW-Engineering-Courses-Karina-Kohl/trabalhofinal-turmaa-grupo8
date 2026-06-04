@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Testes para `StatusViabilidade`.
+ * Resumo: verifica classificação por payback (EXCELENTE/VIAVEL/BAIXA_PRIORIDADE)
+ * e validações de entrada (payback negativo, limites inválidos/iguais).
+ */
 public class StatusViabilidadeTest {
     
     @Test

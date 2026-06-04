@@ -9,6 +9,20 @@ import org.junit.jupiter.api.Test;
 
 
 
+/**
+ * Testes para `ResultadoViabilidade`.
+ * Resumo: verifica criação de resultados para cada status (EXCELENTE/VIAVEL/BAIXA_PRIORIDADE),
+ * erro quando PAYBACK está ausente e leitura de valores por tipo.
+ * Testes:
+ * Teste1: testa criação de ResultadoViabilidade com status EXCELENTE (payback <= limiteExcelenteAnos).
+ * Teste2: testa criação de ResultadoViabilidade com status VIAVEL (payback <= limiteViavelAnos).
+ * Teste3: testa criação de ResultadoViabilidade com status BAIXA_PRIORIDADE
+ *        (payback > limiteViavelAnos).
+ * Teste4: testa que criar ResultadoViabilidade sem PAYBACK lança IllegalArgumentException.
+ * Teste5: testa que getValorPeloTipo retorna os valores corretos para cada tipo de cálculo.
+ * Testes6: testa que criar ResultadoViabilidade com limites inválidos lança IllegalArgumentException
+ *       (limiteExcelenteAnos negativo, limiteViavelAnos negativo, limites iguais, limiteExcelenteAnos maior que limiteViavelAnos).
+ */
 public class ResultadoViabilidadeTest {
     
     @Test

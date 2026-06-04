@@ -2,6 +2,14 @@ package br.edu.ufrgs.model.resultado;
 
 import br.edu.ufrgs.model.enums.EStatusViabilidade;
 
+/**
+ * Determina o status de viabilidade a partir do payback.
+ *
+ * Regras de negócio (resumo):
+ * - payback <= limiteExcelenteAnos  -> EXCELENTE
+ * - payback <= limiteViavelAnos     -> VIAVEL
+ * - caso contrário                   -> BAIXA_PRIORIDADE
+ */
 public class StatusViabilidade {
     private final EStatusViabilidade statusViabilidade;
 
