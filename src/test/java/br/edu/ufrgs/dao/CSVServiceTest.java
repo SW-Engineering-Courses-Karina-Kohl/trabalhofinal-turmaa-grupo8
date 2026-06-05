@@ -28,7 +28,7 @@ public class CSVServiceTest {
                 // ---------- Arrange ----------
                 CSVService csvService = new CSVService();
 
-                String caminhoArquivo = "src/test/resources/csv/arquivo_valido.csv";
+                String caminhoArquivo = "src/test/resources/CSV/arquivo_valido.csv";
 
                 // ---------- Act ----------
                 List<String[]> linhas = csvService.ler(caminhoArquivo);
@@ -109,7 +109,7 @@ public class CSVServiceTest {
                 // ---------- Arrange ----------
                 CSVService csvService = new CSVService();
 
-                String caminhoArquivo = "src/test/resources/csv/saida.csv";
+                String caminhoArquivo = "src/test/resources/CSV/saida.csv";
 
                 List<String[]> dados = new ArrayList<>();
 
