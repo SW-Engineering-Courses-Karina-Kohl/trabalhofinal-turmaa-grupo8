@@ -28,12 +28,12 @@ public class CSVService {
             List<String[]> linhasCsv = reader.readAll(); // lê todas as linhas do CSV
             return linhasCsv;
 
-        } catch (IOException e) {
+        } catch (IOException e) { 
             // encapsula o erro de leitura do arquivo em uma RuntimeException
             // (sem necessidade de declarar throws na assinatura do método significa )
             throw new RuntimeException("Erro ao ler arquivo CSV: " + caminhoArquivo, e);
 
-        } catch (CsvException e) {
+        } catch (CsvException e) { // SE REMOVER ESSA EXCEÇÃO, NAO COMPILA
             // encapsula falhas sobre formato ou estrutura do CSV (ex: número de colunas
             // diferente entre linhas) 
             throw new RuntimeException("Erro no formato/conteúdo do CSV: " + caminhoArquivo, e);
