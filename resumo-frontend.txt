@@ -1,0 +1,35 @@
+os arquivos do frontend ficam na pasta webapp
+(src/main/webapp)
+
+ARQUITETURA
+
+Frontend 
+        ↓
+Servlets (controller)
+        ↓
+Services
+        ↓
+Repository / Mapper
+
+
+fluxo
+o Stitch gera interface visual 
+-> transformar em (HTML do Stitch + expressões JSP) 
+-> o Servlet usa essa interface
+
+- o usuário abre http://localhost:8080/
+- Tomcat procura index.jsp
+- aparece a primeira tela 
+
+
+
+CONCEITOS 
+JSP = JavaServer Pages 
+Servlet
+
+
+o index.jsp ainda é um protótipo
+tem vários campos hardcoded:
+- cards de economia, payback e status
+- tabela de projetos processados
+- o formulário aponta para <form action="seu-endpoint-jsp">
