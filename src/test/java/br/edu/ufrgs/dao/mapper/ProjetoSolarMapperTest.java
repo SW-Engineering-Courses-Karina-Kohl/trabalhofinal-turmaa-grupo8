@@ -70,10 +70,8 @@ public class ProjetoSolarMapperTest {
         @Test
         void deveRegistrarErroQuandoInvestimentoNegativo(){
 
-
         List<String[]> linhas =
                 new ArrayList<>();
-
 
         linhas.add(
                 new String[]{
@@ -85,9 +83,7 @@ public class ProjetoSolarMapperTest {
                 }
         );
 
-
         linhas.add(
-
                 new String[]{
                         "1",
                         "Juraci",
@@ -95,29 +91,26 @@ public class ProjetoSolarMapperTest {
                         "400",
                         "ABC"
                 }
-
         );
 
-
         ProjetoSolarMapper mapper =
-
                 new ProjetoSolarMapper();
-
 
         mapper.mapear(
                 linhas
         );
 
-
         assertEquals(
-
                 1,
-
-                mapper.getErros()
-                        .size()
-
+                mapper.getErros().size()
         );
 
+        assertEquals(
+                "Investimento negativo",
+                mapper.getErros()
+                        .get(0)
+                        .getMotivo()
+        );
         }
 
 
@@ -128,7 +121,6 @@ public class ProjetoSolarMapperTest {
         List<String[]> linhas =
                 new ArrayList<>();
 
-
         linhas.add(
                 new String[]{
                         "id",
@@ -138,7 +130,6 @@ public class ProjetoSolarMapperTest {
                         "modelo"
                 }
         );
-
 
         linhas.add(
                 new String[]{
@@ -150,22 +141,24 @@ public class ProjetoSolarMapperTest {
                 }
         );
 
-
         ProjetoSolarMapper mapper =
                 new ProjetoSolarMapper();
-
 
         mapper.mapear(
                 linhas
         );
 
-
         assertEquals(
                 1,
-                mapper.getErros()
-                        .size()
+                mapper.getErros().size()
         );
 
+        assertEquals(
+                "Dados inválidos",
+                mapper.getErros()
+                        .get(0)
+                        .getMotivo()
+        );
         }
 
 
@@ -175,14 +168,12 @@ public class ProjetoSolarMapperTest {
         List<String[]> linhas =
                 new ArrayList<>();
 
-
         linhas.add(
                 new String[]{
                         "id",
                         "cliente"
                 }
         );
-
 
         linhas.add(
                 new String[]{
@@ -192,33 +183,33 @@ public class ProjetoSolarMapperTest {
                 }
         );
 
-
         ProjetoSolarMapper mapper =
                 new ProjetoSolarMapper();
-
 
         mapper.mapear(
                 linhas
         );
 
-
         assertEquals(
-
                 1,
-
-                mapper.getErros()
-                        .size()
-
+                mapper.getErros().size()
         );
 
-}
+        assertEquals(
+                "Número inválido de colunas",
+                mapper.getErros()
+                        .get(0)
+                        .getMotivo()
+        );
+        }
+
+
 
         @Test
         void deveRegistrarErroQuandoProducaoNegativa(){
 
         List<String[]> linhas =
                 new ArrayList<>();
-
 
         linhas.add(
                 new String[]{
@@ -230,7 +221,6 @@ public class ProjetoSolarMapperTest {
                 }
         );
 
-
         linhas.add(
                 new String[]{
                         "1",
@@ -241,25 +231,24 @@ public class ProjetoSolarMapperTest {
                 }
         );
 
-
         ProjetoSolarMapper mapper =
                 new ProjetoSolarMapper();
-
 
         mapper.mapear(
                 linhas
         );
 
-
         assertEquals(
-
                 1,
-
-                mapper.getErros()
-                        .size()
-
+                mapper.getErros().size()
         );
 
-}
+        assertEquals(
+                "Produção negativa",
+                mapper.getErros()
+                        .get(0)
+                        .getMotivo()
+        );
+        }
 
 }
