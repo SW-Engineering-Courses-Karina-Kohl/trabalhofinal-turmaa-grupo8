@@ -1,0 +1,38 @@
+1. docker compose down
+Quando usar: 
+se quiser parar e remover os containers em execução, liberando recursos.
+Exemplo de uso: 
+se você fez alterações no código e quer garantir que os containers antigos não interfiram no novo processo 
+ou se você quer parar completamente a aplicação.
+
+
+2. docker compose build --no-cache
+Quando usar: 
+p/ reconstruir as imagens do Docker do zero, sem usar cache
+Exemplo de uso: 
+se fez alterações no código ou nas dependências
+ou se quer garantir que o Docker use as versões mais recentes de bibliotecas e configurações, sem aproveitar imagens antigas
+
+
+3. docker compose up
+Quando usar: 
+ara iniciar os containers e rodar a aplicação. Se os containers já foram criados e você só quer rodar ou reiniciar a aplicação.
+Exemplo de uso: Quando você quer subir a aplicação depois de rodar docker compose down ou quando fez mudanças no código (sem precisar reconstruir a imagem).
+Resumo rápido:
+docker compose down → Parar e remover os containers.
+docker compose build --no-cache → Reconstruir as imagens sem usar cache.
+docker compose up → Subir ou reiniciar os containers.
+
+
+Quando usar esses comandos juntos?
+-- se fez alterações no código e quer garantir que tudo seja atualizado:
+
+docker compose down → para e remove os containers
+docker compose build --no-cache → imagem reconstruída do zero.
+docker compose up → roda novamente os containers com o código mais recente
+
+
+
+
+docker rm -f servlet-container
+
