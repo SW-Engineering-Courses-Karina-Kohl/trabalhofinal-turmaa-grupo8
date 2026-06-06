@@ -1,23 +1,56 @@
 cd C:\Users\brend\Downloads\trabalhofinal-turmaa-grupo8
 
+# compilar java com MAVEN 
 mvn clean compile
-
 mvn clean package
 
 docker compose down
 docker compose build --no-cache 
 docker compose up -d
 
-docker compose up -d
 
-git push -u origin feature/csv-mappers
-git push
+git status
+
+# lista branches e ver em qual branch está (*)
+git branch
+
+# ver histórico de commits
+git log --oneline
+
+# buscar infos mais recente do GitHub (estado atual das branches remotas)
+# baixa do servidor, mas não altera arquivos locais
+git fetch origin 
+
+# atualiza minha branch com alterações do servidor
+git pull <mome_do_repos_remoto> <branch_remota_desejada>
+
+# trocar para uma brach existente 
+git checkout feature/dados 
+git switch feature/dados
+
+# add arquivos para o próximo commit 
+git add .   # add todos da pasta que estou 
+git add <caminho>/<Arquivo>   # add apenas um arquivo 
+
+# criar um commit (ponto de salvamento)
+git commit -m "Implementa testes do ConfigMapper"
+
+# enviar alterações para GitHub
+# -u vincula a branch local atual à branch remota
+git push -u <mome_do_repos_remoto> <nome_da_branch> # qual branch daquele rep remoto
+git push -u origin feature/brenda/dados
+
+# se fez especificação acima, para próximos commits:
+git push 
+
+# estou em uma branch e quero incorporar nela tudo o que existe na main
+git merge main 
+
+# se eu quiser só copiar tudo da main (sem merge e ignora branch atual)
+git fetch origin
+git reset --hard origin/main  # descarta alterações locais
+
+git push -u origin feature/<nome_dev>/<area>
 
 http://localhost:8080/csv-teste
 http://localhost:8080/index.jsp
-
-//atualizar branch com main futuramente
-git checkout main
-git pull
-git checkout feature/csv-mappers
-git merge main
