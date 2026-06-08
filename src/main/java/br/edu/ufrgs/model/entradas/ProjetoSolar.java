@@ -1,5 +1,11 @@
 package br.edu.ufrgs.model.entradas;
 
+/*
+Classe que representa um projeto solar, com informações como ID do projeto, nome do cliente, investimento inicial, produção mensal em kWh e modelo do painel solar.
+Esses dados são essenciais para realizar análises de viabilidade econômica e ambiental dos projetos solares, permitindo calcular métricas como economia mensal, payback e impacto ambiental (CO2 evitado).
+A classe possui um construtor para inicializar os atributos e getters para acessar os valores de cada campo. Ela é utilizada como parte do processo de leitura e mapeamento dos dados de entrada, onde cada linha do arquivo CSV é convertida em um objeto ProjetoSolar para posterior análise.
+*/
+
 public class ProjetoSolar {
 
     private String projetoId; // ID do projeto

@@ -67,10 +67,10 @@ public class ErroProjetoSolarServiceTest {
                                 "linha teste"
                         );
 
-                List<ErroProjetoSolar> erros =
+                List<ErroProjetoSolar> erros = 
                         List.of(erro);
 
-                ErroProjetoSolarService service =
+                ErroProjetoSolarService service = 
                         new ErroProjetoSolarService();
 
                 RuntimeException excecao =
@@ -83,8 +83,7 @@ public class ErroProjetoSolarServiceTest {
                         );
 
                 assertTrue(
-                        excecao.getMessage()
-                                .contains("Erro ao salvar TXT")
+                        excecao.getMessage().contains("Erro ao salvar TXT")
                 );
         }
 }
