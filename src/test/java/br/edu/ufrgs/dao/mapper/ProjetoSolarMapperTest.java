@@ -154,7 +154,7 @@ public class ProjetoSolarMapperTest {
                 );
 
                 assertEquals(
-                        "Dados inválidos",
+                        "Dados inválidos, números esperados para investimento ou produção",
                         mapper.getErros()
                                 .get(0)
                                 .getMotivo()

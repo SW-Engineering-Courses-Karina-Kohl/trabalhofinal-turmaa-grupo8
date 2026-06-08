@@ -1,12 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<!DOCTYPE html><html class="light" lang="pt-br" style=><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!DOCTYPE html>
+
+<html class="light" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>SolarEfficiency | Gestor de Viabilidade Fotovoltaica</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -122,39 +124,60 @@
 <body class="bg-surface text-on-surface font-body-md min-h-screen">
 <main class="max-w-6xl mx-auto p-margin-mobile md:p-margin-desktop flex flex-col gap-lg">
 <!-- Simplified Header -->
-<header class="text-center md:text-left"><div class="flex items-center gap-sm mb-xs justify-center md:justify-start"><div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-on-primary" data-icon="bolt">bolt</span></div><h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface font-bold">SolarEfficiency</h1></div><h2 class="font-headline-md text-headline-md text-on-surface-variant mb-sm">Gestor de Viabilidade Fotovoltaica</h2><p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto md:mx-0">Faça upload de um arquivo CSV contendo projetos solares para calcular&nbsp;<div>economia financeira, impacto verde e tempo de retorno estimado.</div></p></header>
-<!-- Central Upload Area -->
-<section class="w-full">
-<form action="seu-endpoint-jsp" enctype="multipart/form-data" method="POST">
-<div class="relative group cursor-pointer border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-lowest p-lg lg:p-xl transition-all duration-300 flex flex-col items-center justify-center text-center" id="drop-zone">
-<input accept=".csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="file-input" name="arquivoCsv" type="file">
-<div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-md group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
-<span class="material-symbols-outlined text-4xl" data-icon="upload_file">upload_file</span>
+<header class="text-center md:text-left"><div class="flex items-center gap-sm mb-xs justify-center md:justify-start"><div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-on-primary" data-icon="bolt">bolt</span></div><h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface font-bold">SolarEfficiency</h1></div><h2 class="font-headline-md text-headline-md text-on-surface-variant mb-sm">Gestor de Viabilidade Fotovoltaica</h2><p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto md:mx-0">Faça upload de um arquivo CSV contendo projetos solares para calcular <div>economia financeira, impacto verde e tempo de retorno estimado.</div></p></header><section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Tarifa de Energia</span>
+<p class="font-headline-md text-primary">R$ 0,85/kWh</p>
 </div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Entrada de Projetos</h3>
-<p class="text-body-md font-body-md text-on-surface-variant mb-lg max-w-md">
-                        Arraste seu arquivo CSV ou use os botões abaixo para iniciar o processamento automatizado.
-                    </p>
-<div class="flex flex-col sm:flex-row items-center gap-md">
-<label class="px-lg py-sm border border-outline text-on-surface rounded-lg font-bold hover:bg-surface-container-high transition-all cursor-pointer" for="file-input">
-                            Selecionar Arquivo
-                        </label>
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Fator de Carbono</span>
+<p class="font-headline-md text-primary">0,092 kg/kWh</p>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Taxa de Degradação</span>
+<p class="font-headline-md text-primary">0,80% / ano</p>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Limite de Payback</span>
+<p class="font-headline-md text-primary">&lt; 4 anos</p>
+</div>
+</section>
+<!-- Central Upload Area -->
+<section class="w-full"><form action="seu-endpoint-jsp" class="grid grid-cols-1 md:grid-cols-2 gap-gutter" enctype="multipart/form-data" method="POST">
+<div class="border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-lowest p-lg flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-2xl" data-icon="settings">settings</span>
+</div>
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface mb-xs">Configurações (CSV)</h3>
+<p class="text-label-sm text-on-surface-variant mb-md">Upload de parâmetros globais</p>
+<input accept=".csv" class="hidden" id="config-input" name="configCsv" type="file"/>
+<label class="px-md py-xs border border-outline text-on-surface rounded-lg font-bold hover:bg-surface-container-high transition-all cursor-pointer text-label-sm" for="config-input">
+Selecionar Arquivo
+</label>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-lowest p-lg flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-2xl" data-icon="database">database</span>
+</div>
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface mb-xs">Base de Projetos (CSV)</h3>
+<p class="text-label-sm text-on-surface-variant mb-md">Upload da lista de clientes</p>
+<input accept=".csv" class="hidden" id="projetos-input" name="projetosCsv" type="file"/>
+<label class="px-md py-xs border border-outline text-on-surface rounded-lg font-bold hover:bg-surface-container-high transition-all cursor-pointer text-label-sm" for="projetos-input">
+Selecionar Arquivo
+</label>
+</div>
+<div class="md:col-span-2 flex justify-center">
 <button class="px-lg py-sm bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-all flex items-center gap-sm shadow-md" type="submit">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-                            Processar Arquivo
-                        </button>
+Processar Arquivos
+</button>
 </div>
-<p class="mt-md text-label-sm font-label-sm text-primary font-bold hidden" id="file-name"></p>
-</div>
-</form>
-</section>
+</form></section>
 <!-- Placeholder Result Cards -->
 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter"><div class="bento-card bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between min-h-[140px] border-l-4 border-l-on-tertiary-container shadow-md"><div class="flex justify-between items-start"><span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Economia Mensal</span><div class="p-xs bg-tertiary-fixed-dim text-on-tertiary-fixed rounded-lg"><span class="material-symbols-outlined" data-icon="payments">payments</span></div></div><div><h4 class="font-display-lg text-[32px] text-primary" id="res-economia">R$ --</h4><p class="text-label-sm font-label-sm text-on-tertiary-container mt-xs">Aguardando dados</p></div></div><div class="bento-card bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between min-h-[140px] border-l-4 border-l-tertiary-fixed-dim shadow-md"><div class="flex justify-between items-start"><span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Impacto Verde</span><div class="p-xs bg-surface-container-high text-on-tertiary-container rounded-lg"><span class="material-symbols-outlined" data-icon="forest">forest</span></div></div><div><h4 class="font-display-lg text-[32px] text-primary" id="res-impacto">-- kg CO2</h4><p class="text-label-sm font-label-sm text-on-surface-variant mt-xs">Aguardando dados</p></div></div><div class="bento-card bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between min-h-[140px] border-l-4 border-l-secondary-container shadow-md"><div class="flex justify-between items-start"><span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Payback</span><div class="p-xs bg-surface-container-high text-on-surface rounded-lg"><span class="material-symbols-outlined" data-icon="schedule">schedule</span></div></div><div><h4 class="font-display-lg text-[32px] text-primary" id="res-payback">-- anos</h4><p class="text-label-sm font-label-sm text-on-surface-variant mt-xs">Aguardando dados</p></div></div><div class="bento-card bg-surface-container-low border border-outline-variant rounded-xl p-md flex flex-col justify-between min-h-[140px] shadow-sm"><div class="flex justify-between items-start"><span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Status VIABILIDADE</span><div class="p-xs bg-surface-container-highest text-on-surface-variant rounded-lg"><span class="material-symbols-outlined" data-icon="fact_check">fact_check</span></div></div><div><h4 class="font-display-lg text-[32px] text-primary" id="res-status">--</h4><p class="text-label-sm font-label-sm text-on-surface-variant mt-xs">Aguardando análise</p></div></div></section>
 <!-- Results Table -->
 <section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
-<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest">
-<h3 class="font-headline-md text-headline-md text-on-surface">Projetos Processados</h3>
-</div>
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest"><div class="flex justify-between items-center"><h3 class="font-headline-md text-headline-md text-on-surface">Projetos Processados</h3><button class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-lg font-bold text-label-sm hover:opacity-90 transition-all"><span class="material-symbols-outlined text-body-md">download</span>Exportar CSV</button></div></div>
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
@@ -204,7 +227,32 @@
 </tbody>
 </table>
 </div>
-</section>
+<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm"><span class="text-label-sm text-on-surface-variant">Exibindo 1-3 de 12 projetos</span><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><div class="flex gap-xs"><button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold">1</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">2</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">3</button></div><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section><section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-md py-sm border-b border-outline-variant bg-error-container"><div class="flex justify-between items-center"><h3 class="font-headline-md text-headline-md text-on-error-container flex items-center gap-sm"><span class="material-symbols-outlined">error</span>Log de Erros (Dados Inválidos)</h3><button class="flex items-center gap-xs px-md py-xs border border-on-error-container text-on-error-container rounded-lg font-bold text-label-sm hover:bg-white/20 transition-all"><span class="material-symbols-outlined text-body-md">download</span>Exportar Erros (CSV)</button></div></div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">ID</th>
+<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">Cliente</th>
+<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">Motivo do Erro</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-label-sm text-label-sm">#004</td>
+<td class="px-md py-sm font-label-sm text-label-sm font-bold">Condomínio Verde</td>
+<td class="px-md py-sm font-label-sm text-label-sm text-error">Valor de investimento negativo</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-label-sm text-label-sm">#005</td>
+<td class="px-md py-sm font-label-sm text-label-sm font-bold">Loja Central</td>
+<td class="px-md py-sm font-label-sm text-label-sm text-error">Produção inválida (NaN)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex justify-end items-center gap-sm"><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section>
 <!-- Simplified Footer -->
 <footer class="mt-auto pt-lg border-t border-outline-variant flex justify-center items-center pb-md">
 <p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 SolarEfficiency - Sistema de Gestão de Projetos</p>
@@ -256,8 +304,4 @@
             }
         }, false);
     </script>
-
-
-
-
 </body></html>
