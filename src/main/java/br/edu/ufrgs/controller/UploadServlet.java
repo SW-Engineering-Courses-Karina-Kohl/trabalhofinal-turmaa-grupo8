@@ -30,6 +30,13 @@ import jakarta.servlet.http.Part;
 // @MultipartConfig é obrigatório para receber arquivos via formulário
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        // apenas encaminha para o JSP, sem dados
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -99,6 +106,14 @@ somaImpacto  += resultado.getOrDefault(ETipoCalculo.IMPACTO_VERDE,   0.0);
             // --------------------------------------------------
             // PASSO 6: empacotar os dados para o JSP da Lauren
             // --------------------------------------------------
+            
+            System.out.println("Projetos lidos: " + projetos.size());
+            System.out.println("Economia total: " + somaEconomia);
+            System.out.println("Impacto verde: " + somaImpacto);
+            System.out.println("Payback medio: " + paybackMedio);
+            
+            
+            
             req.setAttribute("resultados",    todosResultados); // lista com mapa por projeto
             req.setAttribute("projetos",      projetos);        // lista de ProjetoSolar
             req.setAttribute("economiaTotal", somaEconomia);
@@ -113,7 +128,7 @@ somaImpacto  += resultado.getOrDefault(ETipoCalculo.IMPACTO_VERDE,   0.0);
         // --------------------------------------------------
         // PASSO 7: encaminhar para o JSP (com ou sem erro)
         // --------------------------------------------------
-        req.getRequestDispatcher("/WEB-INF/view/index.jsp")
+        req.getRequestDispatcher("/index.jsp")
            .forward(req, resp);
     }
 
