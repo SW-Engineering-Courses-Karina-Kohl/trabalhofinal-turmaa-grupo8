@@ -184,22 +184,22 @@ if (mensagemErro != null) {
         <div class="flex flex-col gap-sm">
             <div class="flex justify-between items-center bg-surface-container-low p-sm rounded-xl border border-outline-variant/30">
                 <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Tarifa de Energia</span>
-                <span class="font-display-lg text-base text-primary font-bold">R$ 0,85/kWh</span>
+                <span class="font-display-lg text-base text-primary font-bold">${tarifaKWh}</span>
             </div>
 
             <div class="flex justify-between items-center bg-surface-container-low p-sm rounded-xl border border-outline-variant/30">
                 <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Fator de Carbono</span>
-                <span class="font-display-lg text-base text-primary font-bold">0,092 kg/kWh</span>
+                <span class="font-display-lg text-base text-primary font-bold">${fatorCO2}</span>
             </div>
 
             <div class="flex justify-between items-center bg-surface-container-low p-sm rounded-xl border border-outline-variant/30">
-                <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Taxa de Degradação</span>
-                <span class="font-display-lg text-base text-primary font-bold">0,80% / ano</span>
+                <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Limite Excelente</span>
+                <span class="font-display-lg text-base text-primary font-bold">${limiteExcelente}</span>
             </div>
 
             <div class="flex justify-between items-center bg-surface-container-low p-sm rounded-xl border border-outline-variant/30">
-                <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Limite de Payback</span>
-                <span class="font-display-lg text-base text-primary font-bold">&lt; 4 anos</span>
+                <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Limite Viável</span>
+                <span class="font-display-lg text-base text-primary font-bold">${limiteViavel}</span>
             </div>
         </div>
     </div>
@@ -358,156 +358,4 @@ if (projetos != null && !projetos.isEmpty()) {
 </tr>
 <% } } else { %>
 <tr>
-    <td colspan="6" class="px-md py-lg text-center text-on-surface-variant text-label-sm italic">
-        Nenhum projeto processado ainda.
-    </td>
-</tr>
-<% } %>
-</table>
-</div>
-<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm">
-    <span class="text-label-sm text-on-surface-variant" id="proj-info"></span>
-    <div class="flex items-center gap-xs">
-        <button onclick="projPaginar(projPaginaAtual - 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button>
-        <div class="flex gap-xs" id="proj-paginas"></div>
-        <button onclick="projPaginar(projPaginaAtual + 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button>
-    </div>
-</div>
-</section>
-<section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
-<div class="px-md py-sm border-b border-outline-variant bg-error-container">
-    <div class="flex justify-between items-center">
-        <h3 class="font-headline-md text-headline-md text-on-error-container flex items-center gap-sm">
-            <span class="material-symbols-outlined">error</span>Log de Erros (Dados Inválidos)
-        </h3>
-    </div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low">
-<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">ID</th>
-<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">Cliente</th>
-<th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">Motivo do Erro</th>
-</tr>
-</thead>
-<%
-List<ErroProjetoSolar> erros = (List<ErroProjetoSolar>) request.getAttribute("erros");
-
-if (erros != null && !erros.isEmpty()) {
-    for (ErroProjetoSolar erro : erros) {
-%>
-<tr id="erro-row-<%= erro.getLinha() %>" class="hover:bg-surface-container-low transition-colors">
-    <td class="px-md py-sm font-label-sm text-label-sm">Linha <%= erro.getLinha() %></td>
-    <td class="px-md py-sm font-label-sm text-label-sm font-bold"><%= erro.getConteudoLinha() %></td>
-    <td class="px-md py-sm font-label-sm text-label-sm text-error"><%= erro.getMotivo() %></td>
-</tr>
-<% } } else { %>
-<tr>
-    <td colspan="3" class="px-md py-lg text-center text-on-surface-variant text-label-sm italic">
-        Nenhum erro encontrado.
-    </td>
-</tr>
-<% } %>
-</table>
-</div>
-<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm">
-    <span class="text-label-sm text-on-surface-variant" id="erro-info"></span>
-    <div class="flex items-center gap-xs">
-        <button onclick="erroPaginar(erroPaginaAtual - 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button>
-        <div class="flex gap-xs" id="erro-paginas"></div>
-        <button onclick="erroPaginar(erroPaginaAtual + 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button>
-    </div>
-</div>
-<footer class="mt-auto pt-lg border-t border-outline-variant flex justify-center items-center pb-md">
-<p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 SolarEfficiency - Sistema de Gestão de Projetos</p>
-</footer>
-</main>
-
-<script>
-    document.getElementById('config-input').addEventListener('change', function(e) {
-        const spanText = document.getElementById('config-name');
-        if(this.files && this.files.length > 0) {
-            spanText.textContent = "✓ " + this.files[0].name;
-        } else {
-            spanText.textContent = "Nenhum selecionado";
-        }
-    });
-
-    document.getElementById('projetos-input').addEventListener('change', function(e) {
-        const spanText = document.getElementById('projetos-name');
-        if(this.files && this.files.length > 0) {
-            spanText.textContent = "✓ " + this.files[0].name;
-        } else {
-            spanText.textContent = "Nenhum selecionado";
-        }
-    });
-
-    const PROJ_POR_PAGINA = 5;
-    let projPaginaAtual = 1;
-    function projPaginar(pagina) {
-        const linhas = document.querySelectorAll('[id^="proj-row-"]');
-        const total = linhas.length;
-        const totalPaginas = Math.max(1, Math.ceil(total / PROJ_POR_PAGINA));
-        if (pagina < 1 || pagina > totalPaginas) return;
-        projPaginaAtual = pagina;
-        const inicio = (pagina - 1) * PROJ_POR_PAGINA;
-        const fim = inicio + PROJ_POR_PAGINA;
-        linhas.forEach((linha, i) => {
-            linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
-        });
-        const infoEl = document.getElementById('proj-info');
-        if (infoEl) {
-            infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + Math.min(fim, total) + ' de ' + total + ' projetos';
-        }
-        const paginasEl = document.getElementById('proj-paginas');
-        if (paginasEl) {
-            paginasEl.innerHTML = '';
-            for (let p = 1; p <= totalPaginas; p++) {
-                const btn = document.createElement('button');
-                btn.textContent = p;
-                btn.onclick = () => projPaginar(p);
-                btn.className = p === pagina
-                    ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
-                    : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
-                paginasEl.appendChild(btn);
-            }
-        }
-    }
-    projPaginar(1);
-
-    const ERRO_POR_PAGINA = 5;
-    let erroPaginaAtual = 1;
-    function erroPaginar(pagina) {
-        const linhas = document.querySelectorAll('[id^="erro-row-"]');
-        const total = linhas.length;
-        const totalPaginas = Math.max(1, Math.ceil(total / ERRO_POR_PAGINA));
-        if (pagina < 1 || pagina > totalPaginas) return;
-        erroPaginaAtual = pagina;
-        const inicio = (pagina - 1) * ERRO_POR_PAGINA;
-        const fim = inicio + ERRO_POR_PAGINA;
-        linhas.forEach((linha, i) => {
-            linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
-        });
-        const infoEl = document.getElementById('erro-info');
-        if (infoEl) {
-            infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + Math.min(fim, total) + ' de ' + total + ' erros';
-        }
-        const paginasEl = document.getElementById('erro-paginas');
-        if (paginasEl) {
-            paginasEl.innerHTML = '';
-            for (let p = 1; p <= totalPaginas; p++) {
-                const btn = document.createElement('button');
-                btn.textContent = p;
-                btn.onclick = () => erroPaginar(p);
-                btn.className = p === pagina
-                    ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
-                    : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
-                paginasEl.appendChild(btn);
-            }
-        }
-    }
-    erroPaginar(1);
-</script>
-
-</body></html>
+    <<
