@@ -2,6 +2,7 @@ br\edu\ufrgs\dao\ErroProjetoSolarService.class
 br\edu\ufrgs\dao\CSVService.class
 br\edu\ufrgs\service\MotorCalculos.class
 br\edu\ufrgs\service\CalculoImpactoVerde.class
+br\edu\ufrgs\controller\UploadServlet.class
 br\edu\ufrgs\service\CalculoPaybackEstimado.class
 br\edu\ufrgs\service\CalculoEconomiaMensal.class
 br\edu\ufrgs\service\CalculoEconomia.class

@@ -17,6 +17,7 @@ import br.edu.ufrgs.dao.mapper.ProjetoSolarMapper;
 import br.edu.ufrgs.model.entradas.Config;
 import br.edu.ufrgs.model.entradas.ProjetoSolar;
 import br.edu.ufrgs.model.enums.ETipoCalculo;
+import br.edu.ufrgs.model.erros.ErroProjetoSolar;
 import br.edu.ufrgs.model.resultado.ResultadoViabilidade; 
 import br.edu.ufrgs.service.CalculoEconomiaMensal;
 import br.edu.ufrgs.service.CalculoImpactoVerde;
@@ -109,6 +110,7 @@ public class UploadServlet extends HttpServlet {
             Config config = new ConfigMapper().mapear(linhasConfig);
             ProjetoSolarMapper projetoMapper = new ProjetoSolarMapper();
             List<ProjetoSolar> projetos = projetoMapper.mapear(linhasProjetos);
+            List<ErroProjetoSolar> erros = projetoMapper.getErros();
 
             // --------------------------------------------------
             // PASSO 5: calcular com o MotorCalculos
@@ -172,6 +174,7 @@ public class UploadServlet extends HttpServlet {
             req.setAttribute("impactoVerde",       impactoStr);
             req.setAttribute("paybackMedio",       paybackStr);
             req.setAttribute("statusViabilidade",  statusGeral);
+            req.setAttribute("erros",              erros);
 
         } catch (Exception e) {
             req.setAttribute("mensagemErro", e.getMessage());

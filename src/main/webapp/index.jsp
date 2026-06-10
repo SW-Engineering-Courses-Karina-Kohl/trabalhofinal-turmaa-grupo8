@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="br.edu.ufrgs.model.entradas.ProjetoSolar" %>
+<%@ page import="br.edu.ufrgs.model.resultado.ResultadoViabilidade" %>
+<%@ page import="br.edu.ufrgs.model.enums.ETipoCalculo" %>
+<%@ page import="br.edu.ufrgs.model.enums.EStatusViabilidade" %>
+<%@ page import="br.edu.ufrgs.model.erros.ErroProjetoSolar" %>
+<%@ page import="br.edu.ufrgs.model.entradas.ProjetoSolar" %>
 
 
 <%
@@ -204,14 +209,14 @@ if (mensagemErro != null) {
         </div>
         <h3 class="font-headline-md text-xl font-bold text-on-surface mb-xs">Entrada de Projetos</h3>
         <p class="text-label-sm text-on-surface-variant mb-md text-center max-w-sm">
-            Arraste os arquivos CSV ou clique para selecionar as bases necessárias.
+            Clique para selecionar os arquivos de entrada.
         </p>
         
         <form action="upload" method="POST" enctype="multipart/form-data" class="w-full max-w-md">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm mb-md">
                 <div class="flex flex-col gap-xs">
                     <input accept=".csv" class="hidden" id="config-input" name="arquivoConfig" type="file"/>
-                    <label for="config-input" class="w-full py-sm border border-outline text-on-surface rounded-xl font-bold hover:bg-surface-container-high transition-all cursor-pointer text-center text-label-sm">
+                    <label for="config-input" class="w-full py-sm bg-primary text-on-primary rounded-xl font-bold hover:opacity-90 transition-all cursor-pointer text-center text-label-sm">
                         Configuração (CSV)
                     </label>
                     <span id="config-name" class="text-[10px] text-center truncate italic text-outline">Nenhum selecionado</span>
@@ -314,38 +319,47 @@ if (mensagemErro != null) {
 <th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase text-center">STATUS</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant">
+<%
+List<ProjetoSolar> projetos = (List<ProjetoSolar>) request.getAttribute("projetos");
+List<ResultadoViabilidade> resultados = (List<ResultadoViabilidade>) request.getAttribute("resultados");
+
+if (projetos != null && !projetos.isEmpty()) {
+    for (int i = 0; i < projetos.size(); i++) {
+        ProjetoSolar proj = projetos.get(i);
+        ResultadoViabilidade res = resultados.get(i);
+        EStatusViabilidade status = res.getStatus();
+
+        // define a cor do badge de status
+        String badgeClasse = "";
+        String statusTexto = "";
+        if (status.name().equals("EXCELENTE")) {
+            badgeClasse = "bg-tertiary-fixed text-on-tertiary-fixed";
+            statusTexto = "Excelente";
+        } else if (status.name().equals("VIAVEL")) {
+            badgeClasse = "bg-secondary-container text-on-secondary-container";
+            statusTexto = "Viável";
+        } else {
+            badgeClasse = "bg-error-container text-on-error-container";
+            statusTexto = "Baixa Prioridade";
+        }
+%>
 <tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-md py-sm font-label-sm text-label-sm font-bold">Industria Metal</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 250.000,00</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">8.500</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 7.225,00</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-center">2,88</td>
-<td class="px-md py-sm text-center">
-<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-[10px] font-bold uppercase">Excelente</span>
-</td>
+    <td class="px-md py-sm font-label-sm text-label-sm font-bold"><%= proj.getCliente() %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm text-right">R$ <%= String.format("%,.2f", proj.getInvestimentoInicial()) %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm text-right"><%= String.format("%,.0f", proj.getProducaoMesKWh()) %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm text-right">R$ <%= String.format("%,.2f", res.getValorPeloTipo(ETipoCalculo.ECONOMIA_MENSAL)) %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm text-center"><%= String.format("%.2f", res.getValorPeloTipo(ETipoCalculo.PAYBACK)) %></td>
+    <td class="px-md py-sm text-center">
+        <span class="px-sm py-xs <%= badgeClasse %> rounded-full text-[10px] font-bold uppercase"><%= statusTexto %></span>
+    </td>
 </tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-md py-sm font-label-sm text-label-sm font-bold">Fazenda Sol</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 50.000,00</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">1.200</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 1.020,00</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-center">4,08</td>
-<td class="px-md py-sm text-center">
-<span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase">Viável</span>
-</td>
+<% } } else { %>
+<tr>
+    <td colspan="6" class="px-md py-lg text-center text-on-surface-variant text-label-sm italic">
+        Nenhum projeto processado ainda.
+    </td>
 </tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-md py-sm font-label-sm text-label-sm font-bold">Residencial Silva</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 15.000,00</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">250</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-right">R$ 212,50</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-center">5,88</td>
-<td class="px-md py-sm text-center">
-<span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase">Viável</span>
-</td>
-</tr>
-</tbody>
+<% } %>
 </table>
 </div>
 <div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm"><span class="text-label-sm text-on-surface-variant">Exibindo 1-3 de 12 projetos</span><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><div class="flex gap-xs"><button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold">1</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">2</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">3</button></div><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section>
@@ -367,18 +381,24 @@ if (mensagemErro != null) {
 <th class="px-md py-sm text-label-sm font-label-sm text-on-surface-variant uppercase">Motivo do Erro</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant">
+<%
+List<ErroProjetoSolar> erros = (List<ErroProjetoSolar>) request.getAttribute("erros");
+
+if (erros != null && !erros.isEmpty()) {
+    for (ErroProjetoSolar erro : erros) {
+%>
 <tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-md py-sm font-label-sm text-label-sm">#004</td>
-<td class="px-md py-sm font-label-sm text-label-sm font-bold">Condomínio Verde</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-error">Valor de investimento negativo</td>
+    <td class="px-md py-sm font-label-sm text-label-sm">Linha <%= erro.getLinha() %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm font-bold"><%= erro.getConteudoLinha() %></td>
+    <td class="px-md py-sm font-label-sm text-label-sm text-error"><%= erro.getMotivo() %></td>
 </tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-md py-sm font-label-sm text-label-sm">#005</td>
-<td class="px-md py-sm font-label-sm text-label-sm font-bold">Loja Central</td>
-<td class="px-md py-sm font-label-sm text-label-sm text-error">Produção inválida (NaN)</td>
+<% } } else { %>
+<tr>
+    <td colspan="3" class="px-md py-lg text-center text-on-surface-variant text-label-sm italic">
+        Nenhum erro encontrado.
+    </td>
 </tr>
-</tbody>
+<% } %>
 </table>
 </div>
 <div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex justify-end items-center gap-sm"><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section>
