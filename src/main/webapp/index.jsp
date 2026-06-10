@@ -365,8 +365,15 @@ if (projetos != null && !projetos.isEmpty()) {
 <% } %>
 </table>
 </div>
-<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm"><span class="text-label-sm text-on-surface-variant">Exibindo 1-3 de 12 projetos</span><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><div class="flex gap-xs"><button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold">1</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">2</button><button class="w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high">3</button></div><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section>
-
+<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm">
+    <span class="text-label-sm text-on-surface-variant" id="proj-info"></span>
+    <div class="flex items-center gap-xs">
+        <button onclick="projPaginar(projPaginaAtual - 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button>
+        <div class="flex gap-xs" id="proj-paginas"></div>
+        <button onclick="projPaginar(projPaginaAtual + 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button>
+    </div>
+</div>
+</section>
 <section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
 <div class="px-md py-sm border-b border-outline-variant bg-error-container">
     <div class="flex justify-between items-center">
@@ -390,7 +397,7 @@ List<ErroProjetoSolar> erros = (List<ErroProjetoSolar>) request.getAttribute("er
 if (erros != null && !erros.isEmpty()) {
     for (ErroProjetoSolar erro : erros) {
 %>
-<tr class="hover:bg-surface-container-low transition-colors">
+<tr id="erro-row-<%= erro.getLinha() %>" class="hover:bg-surface-container-low transition-colors">
     <td class="px-md py-sm font-label-sm text-label-sm">Linha <%= erro.getLinha() %></td>
     <td class="px-md py-sm font-label-sm text-label-sm font-bold"><%= erro.getConteudoLinha() %></td>
     <td class="px-md py-sm font-label-sm text-label-sm text-error"><%= erro.getMotivo() %></td>
@@ -404,7 +411,14 @@ if (erros != null && !erros.isEmpty()) {
 <% } %>
 </table>
 </div>
-<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex justify-end items-center gap-sm"><div class="flex items-center gap-xs"><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button><button class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button></div></div></section>
+<div class="px-md py-sm border-t border-outline-variant bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-sm">
+    <span class="text-label-sm text-on-surface-variant" id="erro-info"></span>
+    <div class="flex items-center gap-xs">
+        <button onclick="erroPaginar(erroPaginaAtual - 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Anterior</button>
+        <div class="flex gap-xs" id="erro-paginas"></div>
+        <button onclick="erroPaginar(erroPaginaAtual + 1)" class="px-sm py-xs border border-outline rounded text-label-sm hover:bg-surface-container-high transition-colors">Próximo</button>
+    </div>
+</div>
 <footer class="mt-auto pt-lg border-t border-outline-variant flex justify-center items-center pb-md">
 <p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 SolarEfficiency - Sistema de Gestão de Projetos</p>
 </footer>
@@ -427,7 +441,94 @@ if (erros != null && !erros.isEmpty()) {
         } else {
             spanText.textContent = "Nenhum selecionado";
         }
+
+    // Paginação da tabela de erros
+const ERRO_POR_PAGINA = 5;
+let erroPaginaAtual = 1;
+
+function erroPaginar(pagina) {
+    const linhas = document.querySelectorAll('[id^="erro-row-"]');
+    const total = linhas.length;
+    const totalPaginas = Math.max(1, Math.ceil(total / ERRO_POR_PAGINA));
+
+    if (pagina < 1 || pagina > totalPaginas) return;
+    erroPaginaAtual = pagina;
+
+    const inicio = (pagina - 1) * ERRO_POR_PAGINA;
+    const fim = inicio + ERRO_POR_PAGINA;
+
+    linhas.forEach((linha, i) => {
+        linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
     });
+
+    const infoEl = document.getElementById('erro-info');
+    if (infoEl) {
+        const exibindo = Math.min(fim, total);
+        infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + exibindo + ' de ' + total + ' erros';
+    }
+
+    const paginasEl = document.getElementById('erro-paginas');
+    if (paginasEl) {
+        paginasEl.innerHTML = '';
+        for (let p = 1; p <= totalPaginas; p++) {
+            const btn = document.createElement('button');
+            btn.textContent = p;
+            btn.onclick = () => erroPaginar(p);
+            btn.className = p === pagina
+                ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
+                : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
+            paginasEl.appendChild(btn);
+        }
+    }
+}
+
+erroPaginar(1);
+    });
+
+    // Paginação da tabela de projetos
+const PROJ_POR_PAGINA = 5;
+let projPaginaAtual = 1;
+
+function projPaginar(pagina) {
+    const linhas = document.querySelectorAll('[id^="proj-row-"]');
+    const total = linhas.length;
+    const totalPaginas = Math.max(1, Math.ceil(total / PROJ_POR_PAGINA));
+
+    if (pagina < 1 || pagina > totalPaginas) return;
+    projPaginaAtual = pagina;
+
+    const inicio = (pagina - 1) * PROJ_POR_PAGINA;
+    const fim = inicio + PROJ_POR_PAGINA;
+
+    linhas.forEach((linha, i) => {
+        linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
+    });
+
+    // atualiza info
+    const infoEl = document.getElementById('proj-info');
+    if (infoEl) {
+        const exibindo = Math.min(fim, total);
+        infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + exibindo + ' de ' + total + ' projetos';
+    }
+
+    // atualiza botões de página
+    const paginasEl = document.getElementById('proj-paginas');
+    if (paginasEl) {
+        paginasEl.innerHTML = '';
+        for (let p = 1; p <= totalPaginas; p++) {
+            const btn = document.createElement('button');
+            btn.textContent = p;
+            btn.onclick = () => projPaginar(p);
+            btn.className = p === pagina
+                ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
+                : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
+            paginasEl.appendChild(btn);
+        }
+    }
+}
+
+// inicializa ao carregar a página
+projPaginar(1);
 </script>
 
 </body></html>
