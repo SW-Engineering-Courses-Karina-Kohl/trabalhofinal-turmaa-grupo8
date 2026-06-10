@@ -441,94 +441,73 @@ if (erros != null && !erros.isEmpty()) {
         } else {
             spanText.textContent = "Nenhum selecionado";
         }
-
-    // Paginação da tabela de erros
-const ERRO_POR_PAGINA = 5;
-let erroPaginaAtual = 1;
-
-function erroPaginar(pagina) {
-    const linhas = document.querySelectorAll('[id^="erro-row-"]');
-    const total = linhas.length;
-    const totalPaginas = Math.max(1, Math.ceil(total / ERRO_POR_PAGINA));
-
-    if (pagina < 1 || pagina > totalPaginas) return;
-    erroPaginaAtual = pagina;
-
-    const inicio = (pagina - 1) * ERRO_POR_PAGINA;
-    const fim = inicio + ERRO_POR_PAGINA;
-
-    linhas.forEach((linha, i) => {
-        linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
     });
 
-    const infoEl = document.getElementById('erro-info');
-    if (infoEl) {
-        const exibindo = Math.min(fim, total);
-        infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + exibindo + ' de ' + total + ' erros';
-    }
-
-    const paginasEl = document.getElementById('erro-paginas');
-    if (paginasEl) {
-        paginasEl.innerHTML = '';
-        for (let p = 1; p <= totalPaginas; p++) {
-            const btn = document.createElement('button');
-            btn.textContent = p;
-            btn.onclick = () => erroPaginar(p);
-            btn.className = p === pagina
-                ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
-                : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
-            paginasEl.appendChild(btn);
+    const PROJ_POR_PAGINA = 5;
+    let projPaginaAtual = 1;
+    function projPaginar(pagina) {
+        const linhas = document.querySelectorAll('[id^="proj-row-"]');
+        const total = linhas.length;
+        const totalPaginas = Math.max(1, Math.ceil(total / PROJ_POR_PAGINA));
+        if (pagina < 1 || pagina > totalPaginas) return;
+        projPaginaAtual = pagina;
+        const inicio = (pagina - 1) * PROJ_POR_PAGINA;
+        const fim = inicio + PROJ_POR_PAGINA;
+        linhas.forEach((linha, i) => {
+            linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
+        });
+        const infoEl = document.getElementById('proj-info');
+        if (infoEl) {
+            infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + Math.min(fim, total) + ' de ' + total + ' projetos';
+        }
+        const paginasEl = document.getElementById('proj-paginas');
+        if (paginasEl) {
+            paginasEl.innerHTML = '';
+            for (let p = 1; p <= totalPaginas; p++) {
+                const btn = document.createElement('button');
+                btn.textContent = p;
+                btn.onclick = () => projPaginar(p);
+                btn.className = p === pagina
+                    ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
+                    : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
+                paginasEl.appendChild(btn);
+            }
         }
     }
-}
+    projPaginar(1);
 
-erroPaginar(1);
-    });
-
-    // Paginação da tabela de projetos
-const PROJ_POR_PAGINA = 5;
-let projPaginaAtual = 1;
-
-function projPaginar(pagina) {
-    const linhas = document.querySelectorAll('[id^="proj-row-"]');
-    const total = linhas.length;
-    const totalPaginas = Math.max(1, Math.ceil(total / PROJ_POR_PAGINA));
-
-    if (pagina < 1 || pagina > totalPaginas) return;
-    projPaginaAtual = pagina;
-
-    const inicio = (pagina - 1) * PROJ_POR_PAGINA;
-    const fim = inicio + PROJ_POR_PAGINA;
-
-    linhas.forEach((linha, i) => {
-        linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
-    });
-
-    // atualiza info
-    const infoEl = document.getElementById('proj-info');
-    if (infoEl) {
-        const exibindo = Math.min(fim, total);
-        infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + exibindo + ' de ' + total + ' projetos';
-    }
-
-    // atualiza botões de página
-    const paginasEl = document.getElementById('proj-paginas');
-    if (paginasEl) {
-        paginasEl.innerHTML = '';
-        for (let p = 1; p <= totalPaginas; p++) {
-            const btn = document.createElement('button');
-            btn.textContent = p;
-            btn.onclick = () => projPaginar(p);
-            btn.className = p === pagina
-                ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
-                : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
-            paginasEl.appendChild(btn);
+    const ERRO_POR_PAGINA = 5;
+    let erroPaginaAtual = 1;
+    function erroPaginar(pagina) {
+        const linhas = document.querySelectorAll('[id^="erro-row-"]');
+        const total = linhas.length;
+        const totalPaginas = Math.max(1, Math.ceil(total / ERRO_POR_PAGINA));
+        if (pagina < 1 || pagina > totalPaginas) return;
+        erroPaginaAtual = pagina;
+        const inicio = (pagina - 1) * ERRO_POR_PAGINA;
+        const fim = inicio + ERRO_POR_PAGINA;
+        linhas.forEach((linha, i) => {
+            linha.style.display = (i >= inicio && i < fim) ? '' : 'none';
+        });
+        const infoEl = document.getElementById('erro-info');
+        if (infoEl) {
+            infoEl.textContent = 'Exibindo ' + (inicio + 1) + '-' + Math.min(fim, total) + ' de ' + total + ' erros';
+        }
+        const paginasEl = document.getElementById('erro-paginas');
+        if (paginasEl) {
+            paginasEl.innerHTML = '';
+            for (let p = 1; p <= totalPaginas; p++) {
+                const btn = document.createElement('button');
+                btn.textContent = p;
+                btn.onclick = () => erroPaginar(p);
+                btn.className = p === pagina
+                    ? 'w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded text-label-sm font-bold'
+                    : 'w-8 h-8 flex items-center justify-center border border-outline rounded text-label-sm hover:bg-surface-container-high';
+                paginasEl.appendChild(btn);
+            }
         }
     }
-}
-
-// inicializa ao carregar a página
-projPaginar(1);
+    erroPaginar(1);
 </script>
 
 </body></html>

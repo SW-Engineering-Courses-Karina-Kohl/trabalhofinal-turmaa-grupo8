@@ -176,6 +176,10 @@ public class UploadServlet extends HttpServlet {
             req.setAttribute("statusViabilidade",  statusGeral);
             req.setAttribute("erros",              erros);
             req.setAttribute("config",             config);
+            req.setAttribute("tarifaKWh",      String.format("R$ %.2f/kWh", config.getTarifaKWh()));
+            req.setAttribute("fatorCO2",       String.format("%.3f kg/kWh", config.getFatorCO2KWh()));
+            req.setAttribute("limiteExcelente",String.format("< %.0f anos",  config.getLimiteExcelenteAnos()));
+            req.setAttribute("limiteViavel",   String.format("< %.0f anos",  config.getLimiteViavelAnos()));
 
         } catch (Exception e) {
             req.setAttribute("mensagemErro", e.getMessage());
