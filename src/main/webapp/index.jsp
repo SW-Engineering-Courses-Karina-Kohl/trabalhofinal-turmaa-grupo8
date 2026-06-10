@@ -6,6 +6,7 @@
 <%@ page import="br.edu.ufrgs.model.enums.EStatusViabilidade" %>
 <%@ page import="br.edu.ufrgs.model.erros.ErroProjetoSolar" %>
 <%@ page import="br.edu.ufrgs.model.entradas.ProjetoSolar" %>
+<%@ page import="br.edu.ufrgs.model.entradas.Config" %>
 
 
 <%
@@ -254,7 +255,9 @@ if (mensagemErro != null) {
             <h4 class="font-display-lg text-[32px] text-primary font-bold" id="res-economia">
                 <%= request.getAttribute("economiaTotal") != null ? request.getAttribute("economiaTotal") : "R$ --" %>
             </h4>
-            <p class="text-label-sm font-label-sm text-on-tertiary-container mt-xs font-medium">Consolidado de 3 projetos ativos</p>
+            <p class="text-label-sm font-label-sm text-on-tertiary-container mt-xs font-medium">
+            Consolidado de <%= request.getAttribute("projetos") != null ? ((List) request.getAttribute("projetos")).size() : 0 %> projetos ativos
+            </p>
         </div>
     </div>
 

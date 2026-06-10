@@ -175,6 +175,7 @@ public class UploadServlet extends HttpServlet {
             req.setAttribute("paybackMedio",       paybackStr);
             req.setAttribute("statusViabilidade",  statusGeral);
             req.setAttribute("erros",              erros);
+            req.setAttribute("config",             config);
 
         } catch (Exception e) {
             req.setAttribute("mensagemErro", e.getMessage());
