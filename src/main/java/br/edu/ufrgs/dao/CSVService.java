@@ -1,36 +1,30 @@
 package br.edu.ufrgs.dao;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 
 // Responsável por ler e escrever arquivos CSV usando OpenCSV
 // Encapsula a lógica de acesso a .csv
-// essa classe não precisa conhecer os objetos do domínio da aplicação
+// essa classe não precisa conhecer (é independente) os objetos do domínio da aplicação
 public class CSVService {
 
-    // método ler
     // String caminhoArquivo -> List<String[]> linhasCsv
     // (cada array String[] representa uma linha do CSV)
     public List<String[]> ler(String caminhoArquivo) {
 
-        // antes de tentar ler:
         validarCaminho(caminhoArquivo);
 
         try (CSVReader reader = new CSVReader(new FileReader(caminhoArquivo))) {
-            // tenta abrir o arquivo CSV para leitura
-            // Se arquivo aberto com suceso:
+            // Se arquivo aberto com suceso para leitura:
             List<String[]> linhasCsv = reader.readAll(); // lê todas as linhas do CSV
             return linhasCsv;
 
         } catch (IOException e) { 
             // encapsula o erro de leitura do arquivo em uma RuntimeException
-            // (sem necessidade de declarar throws na assinatura do método significa )
             throw new RuntimeException("Erro ao ler arquivo CSV: " + caminhoArquivo, e);
 
         } catch (CsvException e) { // SE REMOVER ESSA EXCEÇÃO, NAO COMPILA
@@ -40,20 +34,18 @@ public class CSVService {
         }
     }
 
-    // método escrever
     // String caminhoArquivo, List<String[]> dados -> void
-    // escreve os dados no arquivo CSV especificado
+// escreve os dados em um arquivo CSV físico
+// no sistema de arquivos onde a aplicação está executando
+// (servidor local ou container Docker)
     public void escrever(String caminhoArquivo, List<String[]> dados) {
 
-        // valida os parâmetros antes de tentar escrever o arquivo
         validarCaminho(caminhoArquivo);
         validarDados(dados);
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(caminhoArquivo))) {
-            // tenta abrir/criar o arquivo CSV para escrita
-            // se o arquivo for aberto/criado com sucesso:
+            // se o arquivo for aberto/criado com sucesso para escrita:
             writer.writeAll(dados);
-            // escreve todas as linhas da lista no arquivo CSV
 
         } catch (IOException e) {
             // encapsula o erro de escrita do arquivo (Ex: permissão negada, espaço insuficiente) 
