@@ -1,11 +1,8 @@
 package br.edu.ufrgs.dao.mapper;
-
 import br.edu.ufrgs.model.entradas.Config;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.Test
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigMapperTest {
@@ -53,9 +50,9 @@ public class ConfigMapperTest {
     @Test
     void mapearDeveFalharSeCabecalhoForInvalidoNomes() {
 
-        // simula um CSV com cabeçalho inválido (coluna "parametro" ausente)
+        // simula um CSV com cabeçalho errado (coluna "parametro" ausente)
         List<String[]> linhas = new ArrayList<>();
-        linhas.add(new String[] { "nome", "valor" }); // cabeçalho errado
+        linhas.add(new String[] { "nome", "valor" }); 
 
         ConfigMapper mapper = new ConfigMapper();
 
@@ -69,7 +66,6 @@ public class ConfigMapperTest {
     void mapearDeveFalharSeCabecalhoForInvalidoColunas() {
 
         // simula cabeçalho com quantidade incorreta de colunas
-
         List<String[]> linhas = new ArrayList<>();
         linhas.add(new String[] { "parametro", "valor", "extra" }); // cabeçalho com 3 colunas
 
@@ -93,8 +89,7 @@ public class ConfigMapperTest {
                 IllegalArgumentException.class,
                 () -> mapper.mapear(linhas));
 
-        assertEquals("Valor numérico inválido no CSV: invalido",
-                        erro.getMessage());
+        assertEquals("Valor numérico inválido no CSV: invalido", erro.getMessage());
     }
 
     
@@ -104,7 +99,6 @@ public class ConfigMapperTest {
         List<String[]> linhas = new ArrayList<>();
 
         linhas.add(new String[] { "parametro", "valor" });
-
         linhas.add(null);
 
         ConfigMapper mapper = new ConfigMapper();
@@ -279,12 +273,5 @@ public class ConfigMapperTest {
 
         assertEquals("limite_excelente_anos não pode ser maior que limite_viavel_anos.", erro.getMessage());
     }
-
-
-
-
-
-
-
 
 }
