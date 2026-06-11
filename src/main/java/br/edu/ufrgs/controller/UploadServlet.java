@@ -107,7 +107,8 @@ public class UploadServlet extends HttpServlet {
         }
 
         // Se for só o acesso normal à página, encaminha para o JSP, sem dados
-        req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+
     }
 
     @Override
