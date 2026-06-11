@@ -72,6 +72,18 @@ public class ProjetoSolarMapper {
                                         linhaValida = false;
                                 }
 
+                                // produção zero (não é válida para cálculo de payback)
+                                if (producao == 0) {
+                                        erros.add( new ErroProjetoSolar(
+                                                        numeroLinha, 
+                                                        "Produção 0 não é válida para cálculo de payback", 
+                                                        String.join(",", linha)
+                                                        )
+                                                );
+
+                                        linhaValida = false;
+                                }
+
                                 if (linhaValida) {
                                 
                                         ProjetoSolar projeto =

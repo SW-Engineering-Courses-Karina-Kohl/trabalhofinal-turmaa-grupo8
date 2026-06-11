@@ -251,4 +251,50 @@ public class ProjetoSolarMapperTest {
                 );
         }
 
+        @Test
+        void deveRegistrarErroQuandoProducaoZero(){
+
+                List<String[]> linhas =
+                        new ArrayList<>();
+
+                linhas.add(
+                        new String[]{
+                                "id",
+                                "cliente",
+                                "investimento",
+                                "producao",
+                                "modelo"
+                        }
+                );
+
+                linhas.add(
+                        new String[]{
+                                "1",
+                                "Juraci",
+                                "20000",
+                                "0",
+                                "ABC"
+                        }
+                );
+
+                ProjetoSolarMapper mapper =
+                        new ProjetoSolarMapper();
+
+                mapper.mapear(
+                        linhas
+                );
+
+                assertEquals(
+                        1,
+                        mapper.getErros().size()
+                );
+
+                assertEquals(
+                        "Produção 0 não é válida para cálculo de payback",
+                        mapper.getErros()
+                                .get(0)
+                                .getMotivo()
+                );
+        }
+
 }
