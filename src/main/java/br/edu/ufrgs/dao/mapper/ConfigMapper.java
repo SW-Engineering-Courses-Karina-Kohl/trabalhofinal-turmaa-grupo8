@@ -1,9 +1,7 @@
 package br.edu.ufrgs.dao.mapper;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import br.edu.ufrgs.model.entradas.Config;
 
 // Responsável por converter (mapear) linhas lidas do CSV
@@ -18,7 +16,6 @@ public class ConfigMapper {
             "limite_viavel_anos"
     };
 
-    // método mapear
     // List<String[]> linhas -> Config
     // converte os dados do CSV em um objeto Config
     public Config mapear(List<String[]> linhas) {
@@ -34,14 +31,10 @@ public class ConfigMapper {
         // constrói o mapa já validando cada linha
         Map<String, Double> parametros = construirMapaParametros(linhas);
 
-        // garante que parametros obrigatórios existam no mapa
+        // garantias
         validarParametrosObrigatorios(parametros);
-        // valores atribuídos aos parmetros devem fazer sentido no domínio
-        validarValoresSemanticos(parametros);
+        validarValoresSemanticos(parametros); // de acordo com domínio da aplicacao
 
-        // cria e retorna o objeto Config do domínio
-        // usando os nomes dos parâmetros esperados para acessar os
-        // seus valores no mapa
         return new Config(
                 parametros.get("tarifa_kwh"),
                 parametros.get("fator_co2_kwh"),
@@ -63,7 +56,6 @@ public class ConfigMapper {
 
             String[] linha = linhas.get(i);
 
-            // validações estruturais de cada linha do CSV
             validarLinhaNaoNula(linha);
             validarQuantidadeColunas(linha);
 
@@ -73,7 +65,6 @@ public class ConfigMapper {
             String nomeParametro = linha[0].trim(); // remove espaços em branco
             String valorTexto = linha[1].trim();
 
-            // validações específicas de cada linha do CSV (parâmetro e valor)
             validarNomeParametro(nomeParametro);
             validarValorNaoVazio(valorTexto);
             validarParametroDuplicado(parametros, nomeParametro);
@@ -83,12 +74,10 @@ public class ConfigMapper {
             // adiciona par parâmetro no mapa (dicionário)
             parametros.put(nomeParametro, valorParametro);
         }
-
         return parametros;
     }
 
     // String valor -> double
-    // converte texto String do CSV para valor numérico Double
     private double converteStringDouble(String valor) {
 
         try {
@@ -164,7 +153,6 @@ public class ConfigMapper {
     }
 
     // String valor -> void
-    // valida se o valor do parâmetro está vazio
     private void validarValorNaoVazio(String valor) {
 
         if (valor.isEmpty()) {
@@ -175,7 +163,6 @@ public class ConfigMapper {
     }
 
     // Map<String, Double> parametros, String nomeParametro -> void
-    // garante que não existem parâmetros duplicados
     private void validarParametroDuplicado(Map<String, Double> parametros,
             String nomeParametro) {
 
@@ -210,25 +197,21 @@ public class ConfigMapper {
         double limiteExcelente = parametros.get("limite_excelente_anos");
         double limiteViavel = parametros.get("limite_viavel_anos");
 
-        // tarifa deve ser positiva (pode 0)
         if (tarifaKwh < 0) {
 
             throw new IllegalArgumentException("tarifa_kwh deve ser maior ou igual a zero.");
         }
 
-        // fator CO2 não pode ser negativo
         if (fatorCo2Kwh < 0) {
 
             throw new IllegalArgumentException("fator_co2_kwh não pode ser negativo.");
         }
 
-        // limite excelente deve ser positivo
         if (limiteExcelente <= 0) {
 
             throw new IllegalArgumentException("limite_excelente_anos deve ser maior que zero.");
         }
 
-        // limite viável deve ser positivo
         if (limiteViavel <= 0) {
 
             throw new IllegalArgumentException("limite_viavel_anos deve ser maior que zero.");
