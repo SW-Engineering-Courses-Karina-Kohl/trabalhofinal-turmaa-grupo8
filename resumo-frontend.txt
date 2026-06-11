@@ -1,4 +1,4 @@
-os arquivos do frontend ficam na pasta webapp
+os arquivos do frontend (view - o que o navegador "conhece") ficam na pasta webapp
 (src/main/webapp)
 
 ARQUITETURA
@@ -7,9 +7,12 @@ Frontend
         ↓
 Servlets (controller)
         ↓
-Services
+DAO/Model
         ↓
-Repository / Mapper
+Services 
+        ↓
+DAO/Model   --> volta para controller, dpois view (front)....
+
 
 
 fluxo
