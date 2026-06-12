@@ -17,7 +17,7 @@ DAO/Model   --> volta para controller, dpois view (front)....
 
 fluxo
 o Stitch gera interface visual 
--> transformar em (HTML do Stitch + expressões JSP) 
+-> transformar em (HTML do Stitch + expressões JSP)
 -> o Servlet usa essa interface
 
 - o usuário abre http://localhost:8080/
