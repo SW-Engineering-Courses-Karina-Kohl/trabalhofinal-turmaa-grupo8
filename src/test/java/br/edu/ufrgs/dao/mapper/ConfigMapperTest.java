@@ -1,6 +1,6 @@
 package br.edu.ufrgs.dao.mapper;
 import br.edu.ufrgs.model.entradas.Config;
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
