@@ -22,7 +22,6 @@ public class ConfigMapperTest {
         ConfigMapper mapper = new ConfigMapper();
 
         // ---------------- Act ----------------
-
         Config config = mapper.mapear(linhas);
 
         // ---------------- Assert ----------------
