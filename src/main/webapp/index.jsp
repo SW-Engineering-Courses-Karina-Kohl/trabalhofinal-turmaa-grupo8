@@ -245,7 +245,7 @@ if (mensagemErro != null) {
         <div class="flex justify-between items-start">
             <div>
                 <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider block font-bold">Economia Mensal Total</span>
-                <span class="text-[11px] text-outline italic block mt-xs">Produção (kWh) × Tarifa</span>
+                <span class="text-[11px] text-outline italic block mt-xs">Produção (kWh) × Tarifa <p>Valor economizado com a geração solar</p></span>
             </div>
             <div class="p-xs bg-tertiary-fixed-dim text-on-tertiary-fixed rounded-lg">
                 <span class="material-symbols-outlined" data-icon="payments">payments</span>
@@ -256,7 +256,7 @@ if (mensagemErro != null) {
                 <%= request.getAttribute("economiaTotal") != null ? request.getAttribute("economiaTotal") : "R$ --" %>
             </h4>
             <p class="text-label-sm font-label-sm text-on-tertiary-container mt-xs font-medium">
-            Consolidado de <%= request.getAttribute("projetos") != null ? ((List) request.getAttribute("projetos")).size() : 0 %> projetos ativos
+            Economia acumulada de todos os <%= request.getAttribute("projetos") != null ? ((List) request.getAttribute("projetos")).size() : 0 %> projetos ativos
             </p>
         </div>
     </div>
@@ -265,7 +265,7 @@ if (mensagemErro != null) {
         <div class="flex justify-between items-start">
             <div>
                 <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider block font-bold">Impacto Verde</span>
-                <span class="text-[11px] text-outline italic block mt-xs">Produção (kWh) × Fator CO₂</span>
+                <span class="text-[11px] text-outline italic block mt-xs">Produção (kWh) × Fator CO₂ <p>Redução estimada de emissões de carbono</p></span>
             </div>
             <div class="p-xs bg-surface-container-high text-on-tertiary-container rounded-lg">
                 <span class="material-symbols-outlined" data-icon="forest">forest</span>
@@ -275,7 +275,7 @@ if (mensagemErro != null) {
             <h4 class="font-display-lg text-[32px] text-primary font-bold" id="res-impacto">
                 <%= request.getAttribute("impactoVerde") != null ? request.getAttribute("impactoVerde") + " kg CO₂" : "-- kg CO₂" %>
             </h4>
-            <p class="text-label-sm font-label-sm text-on-surface-variant mt-xs font-medium">Evitados este mês</p>
+            <p class="text-label-sm font-label-sm text-on-surface-variant mt-xs font-medium"> Quantidade de gás CO₂ não emitido neste mês</p>
         </div>
     </div>
 
@@ -283,7 +283,7 @@ if (mensagemErro != null) {
         <div class="flex justify-between items-start">
             <div>
                 <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider block font-bold">Payback Estimado</span>
-                <span class="text-[11px] text-outline italic block mt-xs">Investimento / Economia Mensal</span>
+                <span class="text-[11px] text-outline italic block mt-xs">Investimento &divide; Economia Mensal <p>Tempo médio estimado para recuperação do capital investido</p></span>
             </div>
             <div class="p-xs bg-surface-container-high text-on-surface rounded-lg">
                 <span class="material-symbols-outlined" data-icon="schedule">schedule</span>
